@@ -1,5 +1,6 @@
 插件推荐https://segmentfault.com/a/1190000006697219
 
+https://github.com/VIO/Ovo.git
 
 安装完成后，在开始菜单里找到“Git”->“Git Bash” ， git 的命令行窗口，则表示安装成功
 
@@ -128,9 +129,9 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 	// 在 gitHub 上创建远程仓库后，可以克隆本地仓库到远程仓库，根据提示运行下列命令
 
 1、关联远程仓库和本地仓库
-$ git remote add origin git@github.com:ttWeee/lll.git
+$ git remote add origin git@github.com:VIO/Ovo.git
 	// origin 为远程仓库默认名字
-	// ttWeee 为gitHui 账户名
+	// VIO 为gitHui 账户名
 
 2、上传本地仓库代码	
 $ git push -u origin master
@@ -149,7 +150,7 @@ $ git push origin master
 	// 登陆GitHub，创建一个新的仓库，名字叫gitskills
 	// 勾选Initialize this repository with a README，这样GitHub会自动为我们创建一个README.md文件
 	
-$ git clone git@github.com:ttWeee/gitskills.git
+$ git clone git@github.com:VIO/gitskills.git
 	// 用命令git clone克隆远程仓库代码到本地，会在当前目录生成远程仓库同名的文件夹，进入目录内查看是否克隆成功
 	
 
@@ -348,6 +349,16 @@ $ git branch -d feature-vulcan
 	
 $ git branch -D feature-vulcan
 	// 要强行删除 feature-vulcan 分支，需要使用命令git branch -D feature-vulcan
+	
+	
+	
+	
+.gitignore文件
+	//在仓库的根目录创建.gitignore文件，修改.gitignore文件，添加需要忽略的文件。然后再做add  commit push 
+git rm -r --cached .  #清除缓存  
+git add . #重新trace file  
+git commit -m "update .gitignore" #提交和注释  
+git push origin master #可选，如果需要同步到remote上的话  
 	
 	
 	
