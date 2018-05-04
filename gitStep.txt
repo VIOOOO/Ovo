@@ -1,0 +1,362 @@
+插件推荐https://segmentfault.com/a/1190000006697219
+
+
+安装完成后，在开始菜单里找到“Git”->“Git Bash” ， git 的命令行窗口，则表示安装成功
+
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+	//git config命令的--global参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置
+
+	
+	
+创建版本
+
+
+$ pwd
+	//pwd命令用于显示当前目录。
+	
+$ git init
+	// 创建一个版本库，一个空的文件夹 repository，再执行 $ git init 安装进来。多出个 隐藏的 .git 文件夹则表示成功，此文件夹不能修改
+	
+	// 为避免出现乱码，用 Notepad++代替系统自带记事本，Notepad++的默认编码设置为UTF-8 without BOM
+
+	// 新建一个 readme.txt文件添加内容，并添加到代码仓库。该文件需要放在，创建的代码仓库内 repository
+	
+	
+	
+添加文件到代码仓库
+
+
+$ git add readme.txt
+	// 第一步，用命令git add <file>告诉Git，把文件添加到仓库的暂存区
+
+$ git commit -m "wrote a readme file"
+	// 第二步，用命令git commit告诉Git，把文件提交到仓库
+	
+	//git commit命令，-m后面输入的是本次提交的说明
+	
+	// commit 可以一次提交多个文件， add 可反复多次使用，添加多个文件；
+	// 例如下面写法：
+	// $ git add file1.txt
+	// $ git add file2.txt file3.txt
+	// $ git commit -m "add 3 files."
+	
+	
+	//readme.txt文件 ，修改内容
+	
+	
+	
+查看状态和版本g
+
+
+$ git status  
+	// git status  命令可以让我们时刻掌握仓库当前的状态，是否有文件修改，以及提交的情况
+	
+$ git diff readme.txt 
+	// git diff（difference），显示的格式正是Unix通用的diff格式，查看具体修改的内容和时间
+	
+$ git log
+	// 历史记录 git log命令显示从最近到最远的提交日志
+	// 查看历史记录时候 ，按 q 可以退出，不需要等待加载完成后
+	
+$ git log --pretty=oneline
+	// 精简化查看，历史记录
+	
+$ git reset --hard HEAD^
+	// 当前版本，退回到上一个版本
+	
+$ git reset --hard commit_id
+	// 去到指定的版本commit_id
+	
+$ git reflog
+	// 当你用$ git reset --hard HEAD^回退到add distributed版本时，再想恢复到append GPL，就必须找到append GPL的commit id。
+	//Git提供了一个命令 git reflog 用来查看命令历史
+	
+	
+	
+撤销修改
+
+
+$ git checkout -- file
+	// git checkout -- file 可以丢弃工作区的修改。$ git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销
+	// 还未提交到 暂存区
+	
+	
+$ git reset HEAD file
+	// git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区，当我们用HEAD时，表示最新的版本。
+	// 工作区修改的内容已经提交到暂存区，先使用 $ git reset HEAD file，再使用 $ git checkout -- file
+	
+	// 若工作区修改的内容已经提交到仓库，可以使用 退回版本的方法。
+	// 一、 $ git log 查看历史版本
+	// 二、$ git reset --hard commit_id 去到指定版本
+	
+	
+
+删除文件
+
+
+两步
+$ git rm test.txt
+	//1、 删除 test.txt
+	
+$ git commit -m "remove test.txt"
+	//2、同步版本库中，将该文件删除
+	
+	
+$ git checkout -- test.txt
+	// 将错删的 test.txt 文件恢复。git checkout其实是用版本库里的版本替换工作区的版本
+	
+	
+	
+远程仓库
+
+
+创建SSH 密匙
+
+$ ssh-keygen -t rsa -C "youremail@example.com"
+	// 第1步：创建SSH Key。打开Shell（Windows下打开Git Bash）
+	// 在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件（id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人），如果已经有了，可直接跳到下一步。
+	// 你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。
+	
+	// 第2步：登陆GitHub，打开“Account settings”，“SSH Keys”页面：然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容
+	验证是否成功
+
+	//$ ssh -T git@github.com
+	
+添加远程库步骤
+	// 在 gitHub 上创建远程仓库后，可以克隆本地仓库到远程仓库，根据提示运行下列命令
+
+1、关联远程仓库和本地仓库
+$ git remote add origin git@github.com:ttWeee/lll.git
+	// origin 为远程仓库默认名字
+	// ttWeee 为gitHui 账户名
+
+2、上传本地仓库代码	
+$ git push -u origin master
+	// 把本地库的所有内容推送到远程库上
+	// 用git push命令，实际上是把当前分支master推送到远程
+	// 由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
+3、提交代码到远程仓库
+$ git push origin master
+	// 把本地master分支的最新修改推送至GitHub
+	
+	
+
+从远程库克隆	
+
+	// 登陆GitHub，创建一个新的仓库，名字叫gitskills
+	// 勾选Initialize this repository with a README，这样GitHub会自动为我们创建一个README.md文件
+	
+$ git clone git@github.com:ttWeee/gitskills.git
+	// 用命令git clone克隆远程仓库代码到本地，会在当前目录生成远程仓库同名的文件夹，进入目录内查看是否克隆成功
+	
+
+
+分支管理
+
+
+1、创建与合并分支
+
+$ git checkout -b dev
+	// 创建dev分支，然后切换到dev分支
+	//git checkout命令加上-b参数表示创建并切换，相当于以下两条命令
+	// $ git branch dev
+	// $ git checkout dev
+	
+$ git branch
+	// git branch命令查看当前分支，会列出所有分支，当前分支前面会标一个*号
+	
+	$ git add readme.txt 
+	$ git commit -m "branch test"
+		// 修改代码后提交
+	
+$ git checkout master
+	// dev分支的工作完成，切换回master分支
+	// 查看修改的文件readme.txt ，修改的代码并未在 master 分支上出现，master分支此刻的提交点并没有变
+	
+$ git merge dev
+	 // 把dev分支的工作成果合并到master分支上。
+	 // git merge命令用于合并指定分支到当前分支。
+	 // Fast-forward信息是指本次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快，不一定每次合并都是这样
+	 
+$ git branch -d dev
+	// 合并完成后，就可以放心地删除dev分支了
+	
+$ git branch
+	// 删除后，查看branch，就只剩下master分支
+	
+	
+小结
+
+	Git鼓励大量使用分支：
+
+	查看分支：git branch
+
+	创建分支：git branch <name>
+
+	切换分支：git checkout <name>
+
+	创建+切换分支：git checkout -b <name>
+
+	合并某分支到当前分支：git merge <name>
+		// $ git merge --no-ff -m "merge with no-ff" dev 
+		// --no-ff  参数可以让合并后保留信息，方便查看是否做过合并，-m “XXX” 参数为 备注 
+
+	删除分支：git branch -d <name>
+
+
+
+2、解决冲突
+
+
+$ git checkout -b feature1
+	// 创建新的 feature1 分支
+	
+	$ git add readme.txt 
+	$ git commit -m "AND simple"
+		// 修改文件并提交代码到分支 feature1 上
+	
+$ git checkout master
+	// 切换到master分支
+	// Git还会自动提示我们当前master分支比远程的master分支要超前1个提交
+	
+	$ git add readme.txt 
+	$ git commit -m "& simple"
+		// 在 master 分支上修改与 feature1 分支 相同位置代码，并提交到 master 分支上
+	
+	// 现在，master分支和feature1分支各自都分别有新的提交
+	// 这种情况下，Git无法执行“快速合并”，只能试图把各自的修改合并起来，但这种合并就可能会有冲突
+	
+$ git merge feature1
+	// 在 master 分支合并 feature1分支
+	// Git告诉我们，readme.txt文件存在冲突，必须手动解决冲突后再提交。git status也可以告诉我们冲突的文件
+
+	// 可以直接查看readme.txt的内容
+	// Git用<<<<<<<，=======，>>>>>>>标记出不同分支的内容
+	
+	$ git add readme.txt 
+	$ git commit -m "conflict fixed"
+		// 修改代码后提交
+	
+$ git log --graph --pretty=oneline --abbrev-commit
+	// 用命令  git log 带参数（--graph） 可以看到分支合并图
+	
+$ git branch -d feature1
+	// 最后，删除feature1分支
+	
+
+	
+3、分支管理策略
+
+
+	// 通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。
+	// 如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
+	// 测试 --no-ff方式的git merge
+	
+$ git checkout -b dev
+	// 创建并切换dev分支
+	
+	$ git add readme.txt 
+	$ git commit -m "add merge"
+		// 修改readme.txt文件，并提交一个新的commit
+
+$ git checkout master
+	// 切换回master 分支
+	
+$ git merge --no-ff -m "merge with no-ff" dev
+	//  合并dev分支，请注意--no-ff参数，表示禁用Fast forward
+	
+	// 合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
+
+
+
+4、Bug 分支
+	
+	
+	// Git还提供了一个 stash 功能，可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+	
+$ git stash
+	// 用 git status 查看工作区，就是干净的（除非有没有被Git管理的文件），因此可以放心地创建分支来修复bug
+	// 暂存区是公用的，如果不通过stash命令隐藏，会带到 issue-101 分支以外的分支 。git status 还可以保存需要的文件单独留在分支上，切换到 master 分支也不会看见该文件
+	
+$ git checkout master
+$ git checkout -b issue-101
+	// 假定需要在master分支上修复，就选择 master 分支上，再创建临时分支
+	
+	$ git add readme.txt 
+	$ git commit -m "fix bug 101"
+		// 修复 Bug 后提交代码
+	
+$ git checkout master
+$ git merge --no-ff -m "merged bug fix 101" issue-101
+$ git branch -d issue-101
+	// 切换到master分支，并完成合并，最后删除issue-101分支
+	
+$ git checkout dev
+$ git status
+	// 修复 Bug 后继续回到原先的工作分支上
+	
+$ git stash list
+	// 但是发现 工作区是干净的，用git stash list命令看看
+	// Git把stash内容存在某个地方了，但是需要恢复一下
+
+	
+恢复原先 Git 把 stash 保存的工作区有2个办法
+
+	方法一
+$ git stash apply
+$ git stash drop
+	// git stash apply恢复
+	// 但是恢复后，stash内容并不删除，你需要用git stash drop来删除
+
+	方法二
+$ git stash pop
+	// git stash pop 恢复，恢复的同时把stash内容也删了
+	
+	
+$ git stash list
+	// 恢复后，再用git stash list查看，就看不到任何stash内容了
+	
+$ git stash apply stash@{0}
+	// 若曾经多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash
+	
+
+	
+5、Feature 分支
+
+
+	// 添加到主线代码前的实验支线
+	
+$ git checkout -b feature-vulcan
+	// 创建开发代号为Vulcan的支线
+	
+	$ git add vulcan.py
+	$ git status
+	$ git commit -m "add feature vulcan"
+		// 开发完成后上传代码
+	
+$ git checkout dev
+	// 切回dev分支， 准备合并
+	
+	$ git merge --no-ff -m "merge with no-ff" feature-vulcan
+		// 合并 feature-vulcan 分支
+	
+$ git branch -d feature-vulcan
+	// 合并后可以删除分支，但是未合并的 feature-vulcan 分支会提示销毁失败
+	
+$ git branch -D feature-vulcan
+	// 要强行删除 feature-vulcan 分支，需要使用命令git branch -D feature-vulcan
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
