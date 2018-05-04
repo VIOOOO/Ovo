@@ -9,7 +9,7 @@
     <!-- 侧边栏列表 -->
     <side-bar :info="info"></side-bar>
     <!-- 底部显示的菜单列表 -->
-    <!-- <menu-list></menu-list> -->
+    <!-- <menu-list></menu-list > -->
     <!-- 底部显示的浮层页  音乐列表 -->
     <music-list></music-list>
     <!-- 底部固定页 -->
