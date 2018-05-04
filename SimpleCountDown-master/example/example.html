@@ -1,30 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Simple Countdown</title>
-    
+
     <script src="countDown.js"></script>
-    <link href="style.css" media="all" rel="stylesheet" />
+    <!-- <link href="style.1.css" media="all" rel="stylesheet" /> -->
+    <link href="style.2.css" media="all" rel="stylesheet" />
 </head>
+
 <body>
-<div class="container"></div>
-<script>
-    var cd = new Countdown({
-        cont: document.querySelector('.container'),
-        endDate: 1553468400000,
-        outputTranslation: {
-            year: 'Years',
-            week: 'Weeks',
-            day: 'Days',
-            hour: 'Hours',
-            minute: 'Minutes',
-            second: 'Seconds',
-        },
-        endCallback: null,
-        outputFormat: 'week|day|hour|minute|second',
-    });
-    cd.start();
-</script>
+    <style>
+        .container {
+            position: relative;
+        }
+    </style>
+    <div class="container"></div>
+
+    <div style="padding-top:50px;">
+        <a target="_blank" style="color:pink" href="https://www.cssscript.com/demo/flipping-countdown-clock-javascript-css-countdown-js/">https://www.cssscript.com/demo/flipping-countdown-clock-javascript-css-countdown-js/</a>
+    </div>
+    <script>
+        var cd = new Countdown({
+            cont: document.querySelector('.container'),
+            endDate: 1553468400000,
+            outputTranslation: {
+                year: 'Years',
+                week: 'Weeks',
+                day: 'Days',
+                hour: 'Hours',
+                minute: 'Minutes',
+                second: 'Seconds',
+            },
+            endCallback: null,
+            outputFormat: 'week|day|hour|minute|second',
+        });
+        cd.start();
+    </script>
 </body>
+
 </html>
