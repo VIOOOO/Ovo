@@ -29,6 +29,7 @@ $ git init
 
 $ git add readme.txt
 	// 第一步，用命令git add <file>告诉Git，把文件添加到仓库的暂存区
+	//git add .   //添加全部命令
 
 $ git commit -m "wrote a readme file"
 	// 第二步，用命令git commit告诉Git，把文件提交到仓库
