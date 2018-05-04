@@ -4,7 +4,7 @@
     <v-header></v-header>
     <!-- APP主体body -->
     <v-body></v-body>  
-    <!-- APP底部footer 固定-->
+    <!-- APP底部footer 固定 -->
     <v-footer></v-footer>
   </div>
 </template>
