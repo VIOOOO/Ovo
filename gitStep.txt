@@ -177,9 +177,10 @@ $ git checkout master
 	// dev分支的工作完成，切换回master分支
 	// 查看修改的文件readme.txt ，修改的代码并未在 master 分支上出现，master分支此刻的提交点并没有变
 	
-$ git merge dev
+$ git merge --no-ff dev
 	 // 把dev分支的工作成果合并到master分支上。
 	 // git merge命令用于合并指定分支到当前分支。
+	 // --no-ff参数 ：正常合并，在Master分支上生成一个新节点。默认情况下，Git执行"快进式合并"（fast-farward merge），会直接将Master分支指向Develop分支。使用--no-ff参数后，会执行正常合并，在Master分支上生成一个新节点。
 	 // Fast-forward信息是指本次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快，不一定每次合并都是这样
 	 
 $ git branch -d dev
@@ -188,6 +189,7 @@ $ git branch -d dev
 $ git branch
 	// 删除后，查看branch，就只剩下master分支
 	
+				
 	
 小结
 
@@ -271,7 +273,47 @@ $ git merge --no-ff -m "merge with no-ff" dev
 	
 	// 合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
 
-
+注：临时分支作用一般有三种：功能（feature）分支 、预发布（release）分支、修补bug（fixbug）分支
+	1、功能（feature）分支：开发某种特定功能，从Develop分支上面分出来的。开发完成后，要再并入Develop。采用feature-*的形式命名
+			例子：
+					$ git checkout -b feature-x develop
+						// 创建分支
+					$ git checkout develop
+					$ git merge --no-ff feature-x
+						// 开发完成，功能分支合并到 develop 分支
+					$ git branch -d feature-x
+						//删除feature分支
+						
+	2、预发布（release）分支：指发布正式版本之前，预发布测试。发布结束后必须合并 Develop 和 Master 分支
+			例子：	
+					$ git checkout -b release-1.2 develop
+						// 创建预发布分支
+					$ git checkout master	
+					$ git merge --no-ff release-1.2
+						//合并到 master分支
+					$ git tag -a 1.2
+						// 对合并生成新的节点，做一个标签
+					$ git checkout develop
+					$ git merge --no-ff release-1.2
+						//合并到 develop 分支
+					$ git branch -d release-1.2 
+						// 删除预发布分支
+						
+	3、修补 bug 分支：从 Master 分支创建的分支，进行 bug 修补
+			例子：
+					$ git checkout -b fixbug-0.1 master
+						// 创建修补 bug 分支
+					$ git checkout master
+					$ git merge --no-ff fixbug-0.1
+					$ git tag -a 0.1.1
+						// 修补结束后合并到 master 分支
+					$ git checkout develop
+					$ git merge --no-ff fixbug-0.1
+						// 合并到 develop 分支
+					$ git branch -d fixbug-0.1
+						// 删除修补 fixbug 分支
+		
+			
 
 4、Bug 分支
 	
@@ -351,6 +393,88 @@ $ git branch -D feature-vulcan
 	// 要强行删除 feature-vulcan 分支，需要使用命令git branch -D feature-vulcan
 	
 	
+	
+6、多人协作
+	
+	// 当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。
+
+$ git remote
+	// 查看远程库信息
+
+	$ git remote -v
+		// -v  参数：显示更详细信息 （如果没有推送权限就看不到 push 地址）
+
+		
+	//推送分支：把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上
+
+$ gti push origin master
+	//推送分支代码到 origin仓库 master分支
+	
+	$ git push origin dev
+		// 推送到其他分支 此为 dev 分支
+
+	// 不是一定要把本地分支往远程推送
+	// master分支是主分支，因此要时刻与远程同步；
+	// dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+		
+
+7、Rebase
+
+	// 多人在同一个分支上协作时，很容易出现冲突。即使没有冲突，后push的童鞋不得不先pull，在本地合并，然后才能push成功。
+	// 本地合并后再提交，查看历史 git log 会出现多个分支，并不方便以后查看版本
+	
+$ git rebase
+	// rebase操作的特点：把分叉的提交历史“整理”成一条直线，看上去更直观。缺点是本地的分叉提交已经被修改过了。
+	
+	// rebase操作可以把本地未push的分叉提交历史整理成直线；
+
+	// rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
+
+	
+	
+	
+标签管理
+	
+$ git branch
+	// 切换到要打标签的分支
+
+$ gti  tag v1.0
+	// git tag <name> 打入标签
+	
+$ git tag v0.9 f52c6355
+	// 可以查找到历史的提交版本，对应 commit id 
+	
+$ git tag
+	//查看标签，标签是字母排序
+	
+$ git show v0.9 
+	// 查看标签详细信息
+		
+	$ git tag -a v1.0 -m "version 1.0 released" 1094adb
+		// 还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字：
+		
+	 注意：标签总是和某个commit挂钩。如果这个commit既出现在master分支，又出现在dev分支，那么在这两个分支上都可以看到这个标签。
+	 
+$ git tag -d v0.1
+	// 删除标签 。因为标签都是保存在本地，打错的标签都可以安全删除
+	
+$ git push origin <tagname>
+	// 推送某个标签到远程
+	$ git push origin v1.0
+	
+$ git push origin --tags
+	// 一次性推送全部尚未推送到远程的本地标签
+
+	$ git tag -d v0.9
+	$ git push origin :refs/tags/v0.9
+		//从远程删除标签
+
+	
+	
+自定义Git
+
+$ git config --global color.ui true
+	//让 git 显示颜色
 	
 	
 .gitignore文件
