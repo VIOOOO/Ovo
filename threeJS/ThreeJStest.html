@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Three.js test</title>
+    <script type="text/javascript" src="three.js"></script>
+</head>
+
+<body onload="init()">
+    <div>
+        <h2>Three.js test</h2>
+    </div>
+    <div>
+        <canvas id="mainCanvas" width="400px" height="300px"></canvas>
+    </div>
+    <script>
+        function init() {
+            //定义 Canvas元素
+            var renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('mainCanvas')
+            })
+            //或者是 Three.js 直接生成 Canvas元素，但是 HTML 里不要定义 Canvas 元素，JS里直接写：
+            // var renderer =new THREE.WebGLRenderer();
+            // renderer.setSize(400,300);
+            // document.getElementByTagName('body')[0].appendChild(renderer.domElement);
+
+            //背景 黑色，用于清除画面的颜色
+            renderer.setClearColor(0x000000);
+
+            //场景
+            var scene = new THREE.Scene();
+
+            //透视相机
+            var camera = new THREE.PerspectiveCamera(45, 4 / 3, 1, 1000);
+
+            //正交投影相机
+            // var camera = new THREE.OrthographicCamera(-2, 2, 1.5, -1.5, 1, 10)
+
+            camera.position.set(0, 0, 5);
+            
+            // 指定相机望向原点
+            // camera.lookAt(new THREE.Vector3(0, 0, 0))
+            scene.add(camera);
+
+            //长方体
+            // var cube = new THREE.Mesh(new THREE.CubeGeometry(1, 2, 3),
+            //     new THREE.MeshBasicMaterial({
+            //         color: 0xff0000
+            //     })
+            // );
+
+            //正方体 透视材质
+            var cube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1),
+                new THREE.MeshBasicMaterial({
+                    color: 0xff0000,
+                    wireframe: true
+                })
+            )
+
+
+            scene.add(cube);
+
+            //渲染
+            renderer.render(scene, camera);
+        }
+    </script>
+
+
+</body>
+
+</html>
