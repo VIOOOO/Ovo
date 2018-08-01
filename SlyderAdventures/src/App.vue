@@ -1,16 +1,18 @@
 <template>
     <div id="app" style="background-color: #6f674f;">
         <turntable></turntable>
+        <turntableTwo></turntableTwo>
     </div>
 </template>
 
 <script>
 import turntable from './components/turntable'
-
+import turntableTwo from './components/turntableTwo'
 export default {
     name: 'app',
     components: {
-        turntable
+        turntable,
+        turntableTwo
     }
 }
 </script>
