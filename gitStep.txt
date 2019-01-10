@@ -104,6 +104,8 @@ $ git rm test.txt
 	
 $ git commit -m "remove test.txt"
 	//2、同步版本库中，将该文件删除
+	// git rm -r --cached a/2.txt
+	// 删除 a 目录下的 2.txt 文件
 	
 	
 $ git checkout -- test.txt
