@@ -13,7 +13,7 @@ $ git config --global user.email "email@example.com"
 创建版本
 
 
-$ pwd
+$ pwd 
 	//pwd命令用于显示当前目录。
 	
 $ git init
