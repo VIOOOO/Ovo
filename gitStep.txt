@@ -35,7 +35,9 @@ $ git init
 
 $ git add readme.txt
 	// 第一步，用命令git add <file>告诉Git，把文件添加到仓库的暂存区
-	//git add .   //添加全部命令
+	
+	$ git add .   
+	// 添加全部命令
 
 $ git commit -m "wrote a readme file"
 	// 第二步，用命令git commit告诉Git，把文件提交到仓库
@@ -160,6 +162,9 @@ $ git push origin master
 	
 $ git clone git@github.com:VIO/gitskills.git
 	// 用命令git clone克隆远程仓库代码到本地，会在当前目录生成远程仓库同名的文件夹，进入目录内查看是否克隆成功
+	$ git clone -b <指定分支名> <远程仓库地址> 
+		// $ git clone -b oov2 git@github.com:VIO/gitskills.git
+		// 例如克隆分支 oov2
 	
 
 
@@ -174,6 +179,11 @@ $ git checkout -b dev
 	// $ git branch dev
 	// $ git checkout dev
 	
+	$ git checkout -b newdev origin/dev
+		// 根据远程仓库 dev，新建分支 newdev 
+		// 不会包含本地已经 add 但未 commit 提交的代码
+ 
+	
 $ git branch
 	// git branch命令查看当前分支，会列出所有分支，当前分支前面会标一个*号
 	
@@ -185,13 +195,16 @@ $ git checkout master
 	// dev分支的工作完成，切换回master分支
 	// 查看修改的文件readme.txt ，修改的代码并未在 master 分支上出现，master分支此刻的提交点并没有变
 	
-$ git merge --no-ff dev
+$ git merge --no-ff -m "merge with no-ff"  dev
 	 // 把dev分支的工作成果合并到master分支上。
 	 // git merge命令用于合并指定分支到当前分支。
 	 // --no-ff参数 ：正常合并，在Master分支上生成一个新节点。默认情况下，Git执行"快进式合并"（fast-farward merge），会直接将Master分支指向Develop分支。使用--no-ff参数后，会执行正常合并，在Master分支上生成一个新节点。
-	 // Fast-forward信息是指本次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快，不一定每次合并都是这样
+	// Fast-forward信息是指本次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快，不一定每次合并都是这样
 	 
 $ git branch -d dev
+	// $ git branch -d <要删的分支名>
+	// -d ：删除 已经合并 的分支   
+	// -D ：删除 没有合并 的分支
 	// 合并完成后，就可以放心地删除dev分支了
 	
 $ git branch
@@ -345,7 +358,7 @@ $ git merge --no-ff -m "merged bug fix 101" issue-101
 $ git branch -d issue-101
 	// 切换到master分支，并完成合并，最后删除issue-101分支
 	
-$ git checkout dev
+$ git checkout devd
 $ git status
 	// 修复 Bug 后继续回到原先的工作分支上
 	
@@ -495,6 +508,76 @@ git push origin master #可选，如果需要同步到remote上的话
 	
 	
 	
+	
+	
+vscode  settings.json 配置
+{
+    // 自定义图标
+    "workbench.iconTheme": "vscode-icons",
+    // 编辑器的字号大小
+    "editor.fontSize": 16,
+    // vscode默认启用了根据文件类型自动设置tabsize的选项
+    "editor.detectIndentation": false,
+    // 缩进量
+    "vetur.format.options.tabSize": 4,
+    // 缩进参考线 重新设定tabsize 
+    "editor.tabSize": 4,
+    // #每次保存的时候自动格式化
+    "editor.formatOnSave": false,
+    // #每次保存的时候将代码按eslint格式进行修复
+    "eslint.autoFixOnSave": false,
+    // 添加 vue 支持
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        {
+            "language": "vue",
+            "autoFix": true
+        }
+    ],
+    //  #让prettier使用eslint的代码格式进行校验
+    "prettier.eslintIntegration": true,
+    //  #去掉代码结尾的分号
+    "prettier.semi": false,
+    //  #使用单引号替代双引号
+    "prettier.singleQuote": false,
+    //  #让函数(名)和后面的括号之间加个空格
+    "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+    // #这个按用户自身习惯选择
+    "vetur.format.defaultFormatter.html": "js-beautify-html",
+    // #让vue中的js按编辑器自带的ts格式进行格式化
+    "vetur.format.defaultFormatter.js": "vscode-typescript",
+    "vetur.format.defaultFormatterOptions": {
+		// 折行长度
+		//         // "wrap_line_length": 80,
+        "js-beautify-html": {
+            // 对属性进行换行。
+            "wrap_attributes": "auto"
+            // #vue组件中html代码格式化样式
+        }
+    },
+    // 格式化stylus, 需安装Manta's Stylus Supremacy插件
+    // 是否插入冒号
+    "stylusSupremacy.insertColons": false,
+    // 是否插入分好
+    "stylusSupremacy.insertSemicolons": false,
+    // 是否插入大括号
+    "stylusSupremacy.insertBraces": false,
+    // import之后是否换行
+    "stylusSupremacy.insertNewLineAroundImports": false,
+    // 两个选择器中是否换行
+    "stylusSupremacy.insertNewLineAroundBlocks": false,
+    //指定显示“存储库”视图的位置
+    "gitlens.views.repositories.location": "scm",
+    "beautify.config": {
+        "brace_style": "collapse,preserve-inline"
+    },
+    "window.zoomLevel": 0,
+    "git.autofetch": true,
+    "typescript.locale": "zh-CN"
+
+
+}
 	
 	
 	

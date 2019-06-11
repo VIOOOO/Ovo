@@ -38,7 +38,8 @@ export default {
       award: {},
       time: 0,
       popShow: false, //中奖结果
-      reserve: false //抽奖多转时间
+      reserve: false, //抽奖多转时间
+      startRunning: false //防止多次点击
     };
   },
   methods: {
@@ -47,12 +48,15 @@ export default {
       that.popShow = false;
     },
     start() {
+      if (this.startRunning) return;
       // 开始抽奖
-      this.drawAward();
       this.award = {}; //初始化中奖结果
       this.time = Date.now();
       this.speed = 300;
       this.diff = 15;
+      this.reserve = false;
+      this.startRunning = true;
+      this.drawAward();
     },
     drawAward() {
       // 请求接口, 这里我就模拟请求后的数据(请求时间为2s)
@@ -66,7 +70,7 @@ export default {
       //让转盘多转动时间
       setTimeout(() => {
         this.reserve = true;
-      }, 6000);
+      }, 10000);
 
       this.move();
     },
@@ -85,6 +89,7 @@ export default {
               setTimeout(() => {
                 //   alert('恭喜你，抽中了' + this.award.name);
                 this.popShow = true;
+                this.startRunning=false;
               }, 600);
               return;
             }
