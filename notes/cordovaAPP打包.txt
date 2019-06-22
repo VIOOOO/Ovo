@@ -49,7 +49,7 @@ $ cordova create cordova-demo com.example.cordovaDemo cordovaDemo
 	// 在 cordova-demo 目录创建一个项目，ID 为 com.example.cordovaDemo ，项目名为 cordovaDemo 。 
 	// 参数：
 		// cordova-demo：目录名称
-		// com.example.cordovaDemo：包名
+		// com.example.cordovaDemo：包名 ID 必须看起来像：`com.company.name`
 		// cordovaDemo：项目名（在config.xml中查看）
 	
 	// 生成的cordova文件中
@@ -258,6 +258,10 @@ $ code-push app add <appName> <os> <platform>
 		// os：系统
 		// platform：所在平台
 	
+		// 例：
+		// $ code-push app add test android cordova
+		// 在 cordova 创建一个 android 名为 test app
+		
 	//创建后生成对应 key,：
 	// Production key：生产环境key
 	// Staging key： 开发环境key
@@ -265,10 +269,8 @@ $ code-push app add <appName> <os> <platform>
 	$ code-push deployment ls <appName> -k 
 	//*忘记生成的 Key 的话可执行命令查看
 	
-	// 例：
-	$ code-push app add test android cordova
-		// 在 cordova 创建一个 android 名为 test app
-		
+
+	
 		
 2r、完成上述事情后：创建cordova 项目
 
