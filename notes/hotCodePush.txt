@@ -1,3 +1,6 @@
+# cordova 增量式热更新
+ 热更新插件：cordova-hot-code-push-plugin
+
 # 创建 cordova 项目
 
 $ cordova create testcoco com.coco.ccid testdjapp
@@ -17,13 +20,18 @@ $ cordova plugin add cordova-plugin-inappbrowser
 	// 打开应用程序内浏览器窗口。
 	
 $ cordova plugin add cordova-plugin-themeablebrowser
-	// 
+	// 打开自定义浏览器窗口
 	
 $ cordova plugin add cordova-plugin-splashscreen
 	// 控制应用程序的启动画面
 	
-$ cordova plugin add https://github.com/nordnet/cordova-hot-code-push.git
+$ cordova plugin add https://github.com/SandLZ/cordova-hot-code-push.git
 	// 安装热更新带有进度条的插件
+	// 此插件有 bug 后面会说明遇到的情况
+	
+	// $ cordova plugin add cordova-hot-code-push-plugin
+	// 该插件没有进度条所以使用其他人fork 过的
+	
 	
 # 安装项目后在 config.xml 文件内引入相关使用插件
 	<plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
@@ -41,7 +49,8 @@ $ cordova-hcp build
 	/ / 生成热更新对比文件
 	// www文件夹中会出现两个文件 chcp.json和chcp.manifest
 	// chcp.manifest 为文件的名称与hash值的集合，用于检测哪些文件需要更新
-	
+	// 该文件在每次执行cordova-hcp build 都会更新，为了不用每次更改chcp.json的内容，可以在项目根目录下创建一个cordova-hcp.json文件
+
 	 chcp.json格式为：
 	 {
 		// 自动在native(iOS/Android)下生成文件链接标签
@@ -52,7 +61,7 @@ $ cordova-hcp build
 		 "update": "start",　　　　　　         
 		 "release": "2017.12.16-11.29.38"
 	 }
-	// 该文件在每次执行cordova-hcp build 都会更新，为了不用每次更改chcp.json的内容，可以在项目根目录下创建一个cordova-hcp.json文件
+	
 	
 	
 	
@@ -74,6 +83,12 @@ $ cordova-hcp build
 		  "content_url": "http://localhost/cordova/www"
 	}
 	
+	// 以后每次执行cordova-hcp build时，会将cordova-hcp.json的内容更新到chcp.json中
+	
+	
+	$ cordova-hcp server
+	// 建立本地服务
+	//  .chcpenv文件就出来了；
 	// 此时在项目根目录下会生成一个.chcpenv的文件，此文件用户配置远程服务器，内容如下：
 		{
 		  "content_url": "http://xxxxx.com",　　　　　　 // 用于获取文件
@@ -88,13 +103,16 @@ $ cordova-hcp build
 <chcp>
     <auto-download enabled="false" />
     <auto-install enabled="false" />
-    <config-file url="192.168.1.110/www/chcp.json" />
+    <config-file url="111.222.333.444:33333/www/chcp.json" />
 </chcp>
 
+	// 参数说明：
+	// auto-download：取消自动下载
+	// auto-install：取消自动安装
+	// config-file：为更新文件服务器地址，如果是本地建立的服务器则写入 当前电脑IP
 
-		//$ cordova-hcp server
-			// 建立本地服务
-			//  .chcpenv文件就出来了；
+
+
 			
 			
 			
@@ -106,8 +124,29 @@ $ cordova-hcp build
 
 $ cordova build android
 	// 生成 APK
+	
 
 
+
+
+#遇到的坑
+
+	1、热更新后发现，若发代码有问题的版本更新后，APP 会无法回滚，需要卸载重新安装APP，上产时候会出现不可逆的损失。
+	解决办法：建测试APP 更新没问题再推正式环境
+	2、本地做服务器热更新时候是可以正常更新的，但是部署到CDN上面时候，就会出现报错，重复的循环加载更新，不会出现回滚情况，卡在启动页更新。
+	解决办法：
+		内存溢出导致问题出现
+		修改D:\test\testcoco\platforms\android\app\src\main\java\com\nordnetab\chcp\main\network\FileDownloader.java
+
+		downloadOneByOne(files, contentFolderUrl, downloadFolder, requestHeaders, 0);
+		修改为：
+		for(int i=0;i<files.size();i++) {
+			downloadOneByOne(files, contentFolderUrl, downloadFolder, requestHeaders, i);
+		}
+		
+		并注释
+		// downloadOneByOne(files, contentFolderUrl, downloadFolder, requestHeaders, index);
+		
 	
 	
 	

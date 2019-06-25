@@ -50,7 +50,7 @@ $ cordova create cordova-demo com.example.cordovaDemo cordovaDemo
 	// 参数：
 		// cordova-demo：目录名称
 		// com.example.cordovaDemo：包名 ID 必须看起来像：`com.company.name`
-		// cordovaDemo：项目名（在config.xml中查看）
+		// cordovaDemo：项目名安装显示APP名字（在config.xml中查看）
 	
 	// 生成的cordova文件中
 	
@@ -95,6 +95,22 @@ $ ls android-apk
 	 
 # 添加插件
 $ cordova plugin add <插件名>
+
+	$ cordova plugin add cordova-plugin-device
+	// 获取设备信息
+	
+	$ cordova plugin add cordova-plugin-inappbrowser
+		// 打开应用程序内浏览器窗口。
+		
+	$ cordova plugin add cordova-plugin-themeablebrowser
+		// 打开自定义浏览器窗口
+		
+	$ cordova plugin add cordova-plugin-splashscreen
+		// 控制应用程序的启动画面
+		
+	$ cordova plugin add cordova-hot-code-push-plugin
+	// 热更新插件
+	// 该插件没有进度条所以使用其他人fork 过的
 	 
 	 // 安装插件后在 config.xml 文件可以查看到安装的插件, 如果没有插件可以手动引入 例如：
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />

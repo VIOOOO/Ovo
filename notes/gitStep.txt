@@ -15,7 +15,7 @@ $ git config user.email
 	// 查看账号
 	
 	
-创建版本
+创建版本库
 
 
 $ pwd 
@@ -55,7 +55,7 @@ $ git commit -m "wrote a readme file"
 	
 	
 	
-	
+时光机穿梭
 查看状态和版本g
 
 
@@ -64,6 +64,12 @@ $ git status
 	
 $ git diff readme.txt 
 	// git diff（difference），显示的格式正是Unix通用的diff格式，查看具体修改的内容和时间
+	
+	
+	
+	
+版本退回
+	
 	
 $ git log
 	// 历史记录 git log命令显示从最近到最远的提交日志
@@ -74,6 +80,7 @@ $ git log --pretty=oneline
 	
 $ git reset --hard HEAD^
 	// 当前版本，退回到上一个版本
+	// HEAD指向的版本就是当前版本
 	
 $ git reset --hard commit_id
 	// 去到指定的版本commit_id
