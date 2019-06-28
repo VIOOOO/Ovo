@@ -521,6 +521,10 @@ git push origin master #可选，如果需要同步到remote上的话
 	
 	
 	
+# git 多账户配置
+https://blog.csdn.net/ziwuzhulin/article/details/90400789
+	
+	
 	
 	
 vscode  settings.json 配置
