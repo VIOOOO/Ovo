@@ -108,9 +108,15 @@ $ cordova plugin add <插件名>
 	$ cordova plugin add cordova-plugin-splashscreen
 		// 控制应用程序的启动画面
 		
-	$ cordova plugin add cordova-hot-code-push-plugin
-	// 热更新插件
-	// 该插件没有进度条所以使用其他人fork 过的
+	$ cordova plugin add cordova-plugin-networkinterface
+		// 网络接口信息插件
+		
+	$ cordova plugin add https://github.com/SandLZ/cordova-hot-code-push.git
+		// 安装热更新带有进度条的插件
+		// 此插件有 bug 后面会说明遇到的情况
+		
+		// $ cordova plugin add cordova-hot-code-push-plugin
+		// 该插件没有进度条所以使用其他人fork 过的
 	 
 	 // 安装插件后在 config.xml 文件可以查看到安装的插件, 如果没有插件可以手动引入 例如：
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
