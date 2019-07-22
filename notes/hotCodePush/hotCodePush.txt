@@ -116,7 +116,7 @@ $ cordova-hcp build
 <chcp>
     <auto-download enabled="false" />
     <auto-install enabled="false" />
-    <config-file url="111.222.333.444:33333/www/chcp.json" />
+    <config-file url="111.222.333.444:33333/chcp.json" />
 </chcp>
 
 	// 参数说明：
@@ -164,8 +164,6 @@ $ cordova build android
 	2、项目内使用的插件 cordova-plugin-themeablebrowser 出现不能控制显示窗口横竖屏
 		解决办法： 将项目内的文件 路径：替换四个文件
 			根目录/platforms/android/app/src/main/java/com/initialxy/cordova/themeablebrowser 
-	
-	
 	
 	
 	
