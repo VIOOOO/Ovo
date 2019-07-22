@@ -70,6 +70,7 @@ $ cordova platform add android
 $ cordova platform remove android
 $ cordova platform remove ios
 	// 删除平台支持
+	// 再次新增平台后，删除平台前修改的插件都需要再修改
 	// $ cordova platform rm android
 	// 缩写
 	
@@ -254,5 +255,52 @@ keyPassword=SECRET2
 	
 	
 	
+	
+#遇到坑
+	Android 9.0（API级别28）开始，默认情况下限制了明文流量的网络请求，对未加密流量不再信任，直接放弃请求，因此http的url均无法在webview中加载，https 不受影响。
+	
+	文档地址：https://blog.csdn.net/geofferysun/article/details/88575504
+	Android Manifest功能与权限描述大全：http://tools.jb51.net/table/AndroidManifest
+ 	解决方法：
+	
+	首先保证App申明了网络权限
+	根目录下\cordova-demo\platforms\android\app\src\main\AndroidManifest.xml
+	<uses-permission android:name="android.permission.INTERNET" />
+	
+	方法1：
+	在Application中打开一个开关
+	<manifest ...>
+		<application
+			...
+			android:usesCleartextTraffic="true"
+			...>
+			...
+		</application>
+	</manifest>
+	
+	方法2：
+	res 下新建 xml 目录，创建文件：network_security_config.xml ，内容如下：
+	<?xml version="1.0" encoding="utf-8"?>
+	<network-security-config>
+		<base-config cleartextTrafficPermitted="true" />
+	</network-security-config>
+
+	在 AndroidManifest.xml 的 application 标签添加配置：
+	<manifest ...>
+		<application
+			...
+			android:networkSecurityConfig="@xml/network_security_config"
+			...>
+			...
+		</application>
+	</manifest>
+	
+	方法3：
+	服务器和本地应用都改用 https
+	
+	方法4：
+	targetSdkVersion 降级回到 27
+
+
 
 
