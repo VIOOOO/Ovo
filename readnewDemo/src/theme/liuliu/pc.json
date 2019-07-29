@@ -1,0 +1,11 @@
+{
+    "alias": {
+      "content": "六六",
+      "type": "text"
+    },
+    "logo": {
+      "content": "/static/theme/liuliu/logoliuliu.png",
+      "type": "resource"
+    }
+  }
+  

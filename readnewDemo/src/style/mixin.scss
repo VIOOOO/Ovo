@@ -1,0 +1,194 @@
+$bc: #e4e4e4;
+
+$mainwidth:1000px;
+$font_hover:#fff;
+//定义颜色
+$blue: #0084ff;
+$blue_light:#afd7fd;
+$blue_low:#4ba8ff;
+$blue_high:#0077e6;
+$blue_deep:#02529c;
+$yellow: #ffff00;
+$yellow_light:#ffffa4;
+$yellow_low:#ffff37;
+$yellow_high:#d3d300;
+$yellow_deep:#919100;
+$gold:#ffd700;
+$gold_light:#edd077;
+$gold_navajo:#ebce9c;
+$gold_low:#fce043;
+$gold_high:#e0bf00;
+$gold_deep:#927c00;
+$peru:#65450c;
+$black:#000000;
+$red:#ff0000;
+$red_hover:#a50b00;
+$red_light:#ffb7c1;
+$red_low:#ff564a;
+$red_high:#ca0d00;
+$red_deep:#9e0000;
+$white:#fff;
+$white_ghost:#fafafa;
+$white_smoke:#F5F5F5;
+$gray_gainsboro:#ddd;
+$gray_light: #D3D3D3;
+$gray_silver:#C0C0C0;
+$gray_dark:#a7a7a7;
+$gray_lightslate:#778899;
+$gray_slate: #708090;
+$gray:#808080;
+$gray_dim:#5c5c5c;
+$black:#000000;
+$backdrop_hyaline8: rgba(0, 0, 0, 0.8);
+$backdrop_hyaline6: rgba(0, 0, 0, 0.6);
+$backdrop_hyaline5: rgba(0, 0, 0, 0.5);
+$backdrop_hyaline4: rgba(0, 0, 0, 0.4);
+$backdrop_hyaline3: rgba(0, 0, 0, 0.3);
+$backdrop_hyaline2: rgba(0, 0, 0, 0.2);
+
+$font_color:#000000;
+$font_color01:#322a1d;
+$font_color02:#8b5f38;
+$font_color03:#ffea00;
+$font_color04:#5b2920;
+$font_color05:#c0834c;
+$font_color06:#1a0906;
+$font_color07:#863820;
+$font_color08:#ff2600;
+$font_color09:#0f4583;
+$font_color10:#e7c789;
+
+
+//Password Strength Colors:
+$str_low: #eb0027;
+$str_lows:#ff1702;
+$str_mid: #ffc200;
+$str_high: #11b100;
+
+// z-index 
+$zindex_small:9;
+$zindex_regular:99;
+$zindex_large:999;
+$zindex_high:9999;
+$zindex_top:999999;
+
+//定义字体大小
+$font_small:12px;
+$font_regular:14px;
+$font_large:16px;
+$font_high:18px;
+$font_big:20px;
+$font_title:24px;
+$font_middlesize:30px;
+$font_littitle:36px;
+$font_bigtitle:48px;
+
+//CQ9 Variables
+$cq9ContentBg: linear-gradient(to bottom, #fdd628, #f89e32);
+
+//rem字体大小
+$font_rem_small:0.4rem;
+$font_rem_regular:0.5rem;
+$font_rem_menu:0.6rem;
+$font_rem_common:0.65rem;
+$font_rem_large:0.7rem;
+$font_rem_high:0.8rem;
+$font_rem_big:0.9rem;
+$font_rem_title:1.1rem;
+
+// 背景图片地址和大小
+@mixin bis($url) {
+    background-image: url($url);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+@mixin borderRadius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+
+//定位全屏
+@mixin allcover {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+//定位上下左右居中
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//定位上下左右居中
+@mixin fixed_center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//定位上下居中
+@mixin ct {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+//定位上下居中
+@mixin cl {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+//宽高
+@mixin wh($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+//字体大小、行高、字体
+@mixin font($size, $line-height, $family: 'Microsoft YaHei') {
+    font: #{$size}/#{$line-height} $family;
+}
+
+//字体大小，颜色
+@mixin sc($size:$font_small, $color:$black) {
+    font-size: $size;
+    color: $color;
+}
+
+//flex 布局和 子元素 对其方式
+@mixin fj($type: space-between) {
+    display: flex;
+    justify-content: $type;
+
+}
+
+//padding
+@mixin ptb($pt, $pb) {
+    padding-top: $pt;
+    padding-bottom: $pb;
+}
+
+//居中、固定1000px宽带
+@mixin cenblock($w:$mainwidth) {
+    width: $w;
+    margin: 0 auto;
+}
+
+//选择区域，浏览器默认
+
+@mixin selection() {
+    ::selection {
+        background: $blue_low;
+        color: $white;
+    }
+}

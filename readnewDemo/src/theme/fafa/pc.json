@@ -1,0 +1,11 @@
+{
+    "alias": {
+      "content": "发发",
+      "type": "text"
+    },
+    "logo": {
+      "content": "/static/theme/fafa/logofafa.png",
+      "type": "resource"
+    }
+  }
+  

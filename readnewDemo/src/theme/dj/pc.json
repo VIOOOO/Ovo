@@ -1,0 +1,10 @@
+{
+  "alias": {
+    "content": "天宇",
+    "type": "text"
+  },
+  "logo": {
+    "content": "/static/theme/dj/logo.png",
+    "type": "resource"
+  }
+}

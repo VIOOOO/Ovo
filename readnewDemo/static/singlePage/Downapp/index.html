@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="./resource/favicon.ico" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>天宇头条</title>
+    <meta name="description" content="用户登录可得红包奖励">
+    <link rel="stylesheet" type="text/css" href="./resource/invite.css?v=20194">
+    <script type="text/javascript" src="./resource/jQuery.min.js?v=2019"></script>
+    <script src="./resource/invite.js?v=20194"></script>
+
+    <style>
+        html {
+            font-size: 100px;
+        }
+    </style>
+    <style type="text/css">
+        .i-hid {
+            display: none;
+        }
+    </style>
+</head>
+
+<body style="font-size: 30px;">
+    <div class="register">
+        <div class="downTitle">
+            <img src="./resource/downapp01.png">
+        </div>
+        <div class="fixed-invite-cont">
+            <div class="input">
+                <div class="inpphone">
+                    <div class="input-letf">
+                        <img class="verify" src="./resource/downappIcon01.jpg">
+                    </div>
+                    <div class="input-right">
+                        <input type="text" name="" class="phoneNum" value="" placeholder="输入手机号领取">
+                    </div>
+                </div>
+            </div>
+            <div class="input">
+                <div class="inpverify">
+                    <div class="input-letf">
+                        <img class="verify" src="./resource/downappIcon02.jpg">
+                    </div>
+                    <div class="input-right">
+                        <input type="text" name="" value="" class="verifyNum" placeholder="输入验证码">
+                    </div>
+                </div>
+                <div class="getCode">
+                    <!-- <img class="verify" src="./resource/downapp04.png"> -->
+                    获取验证码
+                </div>
+            </div>
+            <div class="submit" data-path="http://192.100.100.1/api/UserInvites/AddUserInvite">
+                <span>快速注册</span>
+            </div>
+        </div>
+        <div class="downBlock">
+            <img class="c-invite-share" src="./resource/downapp02.png">
+            <p>使用注册手机号，下载登陆APP领取奖金</p>
+        </div>
+        <div class="downbottomBlock">
+            <img src="./resource/downapp06.png">
+        </div>
+    </div>
+    <p class="toast-text" style="display: none;">请输入正确手机号码</p>
+    <div class="loadingBlock">
+        <div class="loadEffect">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="success success1">
+        <div class="bgcolor">
+            <div class="popup">
+                <div class="content-1">
+                    <img src="./resource/downapp05.png">
+                </div>
+                <div class="content-3">
+                    <p>使用注册手机号，下载登陆APP领取奖金</p>
+                </div>
+                <div class="popup-submit">
+                    <span>立即下载</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+{
+  "title": {
+    "content": "天宇官网网址",
+    "type": "text"
+  },
+  "alias": {
+    "content": "天宇",
+    "type": "text"
+  },
+  "logo": {
+    "content": "/src/assets/pc/images/logo.png",
+    "type": "resource"
+  }
+}
