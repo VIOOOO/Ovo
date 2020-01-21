@@ -1,0 +1,8 @@
+顶部导航条 appBar 根据页面滚动实现渐变效果
+
+	监听列表滚动到一定高度后 显示顶部 appBar，
+	
+	Scaffold 自带的 appBar 限制较多所以案例中为自定义appBar, 
+	需要用到 stack 这个类 将自定义的 appBar 进行叠放
+	
+	
