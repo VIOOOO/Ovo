@@ -1,7 +1,0 @@
-仿去哪儿的顶部轮播
-	需要安装插件pubspec.yaml ==> flutter_swiper
-	
-加载缓存中的图片
-	需要安装插件pubspec.yaml ==> transparent_image // 从缓存内获取 placeholder 图片载入前放置一个透明的图片过渡
-				pubspec.yaml ==> cached_network_image	// 配置图片缓存
-	
