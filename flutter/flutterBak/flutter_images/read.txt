@@ -1,0 +1,17 @@
+image 图片的引入使用方法
+
+	网络图片导入 Image.network(url)，以及圆形图片设置 main_image02.dart 案例
+	
+	本地图片导入 Image.asset(url)，
+		1、需要在项目根目录下建立存放图片的文件夹 案例中命名为 images
+		2、并在内部存放对应的几X图片，用不同的尺寸命名文件夹用于区分，文件名一致， 2.0x 和 3.0x 文件为必须
+		3、在文件 pubspec.yaml 声明添加图片:
+			 flutter ==> assets ==> - images/xxx.jpeg  
+									- images/2.0x/xxx.jpeg  
+									- images/3.0x/xxx.jpeg 
+		4、本地图片圆角和网络图片一样							
+		
+		
+
+	
+	
