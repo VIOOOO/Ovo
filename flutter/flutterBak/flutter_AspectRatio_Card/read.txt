@@ -1,0 +1,8 @@
+flutter AspectRatio、Card 卡片组件
+
+	AspectRatio：根据设置调整子元素 child 的款宽高比。
+	AspectRatio 首先在布局限制条件允许的范围内尽可能的扩展，widget 的高度是由宽度和比率决定的，
+		类似 BoxFit 中的contain, 按照固定比率去尽量占满区域。
+	如果在满足所有限制条件后无法找到一个可行的尺寸，AspectRatio 最终将会有限去适应条件，而忽略所设置的比率。
+	
+	
