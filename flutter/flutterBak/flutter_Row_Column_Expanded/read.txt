@@ -1,6 +1,0 @@
-flutter 的布局方式 
-	Row 水平布局
-	Column 垂直布局
-	Expanded 布局 类似 Web 中的 Flex 布局,可以和 Row 组件 Column 组件 配合使用
-	
-	
