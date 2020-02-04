@@ -1,4 +1,4 @@
-image 图片的引入使用方法
+flutter image 图片的引入使用方法
 
 	网络图片导入 Image.network(url)，以及圆形图片设置 main_image02.dart 案例
 	
