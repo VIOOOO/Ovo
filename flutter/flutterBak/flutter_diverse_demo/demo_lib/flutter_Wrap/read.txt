@@ -1,0 +1,8 @@
+flutter Wrap 组件 实现流式布局
+	Wrap 的单行和单列表现与 Row 几乎一致，Wrap 可以扩展多行，横轴 mainAxis 空间不足时候，
+	向纵轴 crossAxis 上扩展，而不是 Row 和 Column 那样单行单列
+	
+	
+
+	
+	
