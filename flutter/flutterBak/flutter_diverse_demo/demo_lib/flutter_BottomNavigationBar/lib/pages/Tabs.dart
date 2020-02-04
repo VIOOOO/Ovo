@@ -3,7 +3,7 @@ import 'package:flutter_app_test/pages/tabs/My.dart';
 import 'tabs/Home.dart';
 import 'tabs/Category.dart';
 import 'tabs/Setting.dart';
-import 'tabs/My.dart';
+// import 'tabs/My.dart';
 
 // Tab 组件03 组件更详细的控制
 class Tabs extends StatefulWidget {
