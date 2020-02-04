@@ -1,0 +1,9 @@
+flutter BottomNavigationBar 自定义底部导航条以及页面切换
+	
+	BottomNavigationBar 是 Scaffold 组件的参数，是底部导航，可以自定义底部 Tab 切换
+
+	
+	
+
+	
+	
