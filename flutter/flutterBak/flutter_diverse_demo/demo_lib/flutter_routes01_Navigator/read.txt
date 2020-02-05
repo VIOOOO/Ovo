@@ -1,0 +1,17 @@
+flutter routes Navigator 普通路由和命名路由 以及各自传值
+
+	在 flutter 中通过 Navigator 组件管理路由导航，并提供了管理堆栈的方法，
+	如 Navigator.push 和 Navigator.pop
+	
+	flutter 提供两种配置路由跳转方式：
+		1、基本路由
+		2、命名路由
+			命名路由相对更加复杂
+			
+	案例1 基本路由
+	案例2 命名路由
+	
+	
+
+	
+	
