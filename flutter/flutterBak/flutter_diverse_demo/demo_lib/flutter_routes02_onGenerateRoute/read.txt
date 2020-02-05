@@ -1,0 +1,9 @@
+flutter routes Navigator 普通路由和命名路由 以及各自传值
+
+	案例2 命名路由
+	
+	
+	
+
+	
+	
