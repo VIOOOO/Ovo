@@ -2,7 +2,9 @@
 	
 	打开 命令运行工具 CDM 
 
-	cd 到夜神对应的安装目录 D:\Program Files\Nox\bin
+	cd 到夜神对应的安装目录 
+	$ D:
+	$ cd D:\Program Files\Nox\bin
 	
 	运行：
 	$ nox_adb.exe connect 127.0.0.1:62001
