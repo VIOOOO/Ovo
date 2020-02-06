@@ -1,4 +1,4 @@
-flutter routes 路由替换，返回到根路由
+flutter routes pushAndRemoveUntil 路由替换，返回到根路由
 
 	
 	// 路由替换 配合普通返回 实现返回根的方法
