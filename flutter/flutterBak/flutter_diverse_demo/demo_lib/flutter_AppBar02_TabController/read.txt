@@ -1,0 +1,11 @@
+flutter APP AppBar 案例2 TabController 自定义顶部导航按钮 
+	图标、颜色以及 TabBar 定义顶部 Tab 页签切换
+	
+	若项目带有请求数据，下拉分页加载更多，滑动切换页签等功能
+	使用 TabController 来实现页签，会更方便实现效果
+	
+	
+	
+
+	
+	
