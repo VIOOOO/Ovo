@@ -1,0 +1,10 @@
+flutter APP AppBar 案例1 TabBar自定义顶部导航按钮 
+	图标、颜色以及 TabBar 定义顶部 Tab 页签切换
+	
+	使用 TabBar 和 TabBarView 实现：
+		模仿新闻头条 顶部集成多页签切换
+	
+	
+
+	
+	
