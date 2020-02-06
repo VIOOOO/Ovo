@@ -1,0 +1,17 @@
+flutter routes 路由替换，返回到根路由
+
+	
+	// 路由替换 配合普通返回 实现返回根的方法
+		Navigator.of(context).pushReplacementNamed('/registerSecond');
+	// 普通返回
+		Navigator.of(context).pop();
+		
+	
+	
+	// 返回根路由 指定跳转到 Tabs页面并指定页码 也可以实现返回跟路由
+		Navigator.of(context).pushAndRemoveUntil(
+			new MaterialPageRoute(builder: (context) => new Tabs(index: 2,)),
+			(route) => route == null,
+		);
+	
+	
