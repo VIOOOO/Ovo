@@ -1,0 +1,7 @@
+flutter TextiField CheckBox Switch 单行多行文本框 多选单选组件 开关组件
+
+	CheckBox、CheckboxListTile: 多选框组件
+	Radio、RadioListTile：单选按钮组件
+	Switch、SwitchListTile：开关
+	
+ 	
