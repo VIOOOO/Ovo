@@ -1,0 +1,23 @@
+flutter swiper 轮播组件
+	
+	需要使用到插件库 轮播组件
+	第三方库：https://pub.dev/
+	
+	例如 flutter_swiper 组件
+	
+	安装：在 pubspec.yaml 文件内配置 后保存，软件会自动拉取插件代码
+		pubspec.yaml ==> dependencies:
+							flutter_swiper: ^1.1.6
+							
+		若没有自动拉取插件库代码 则可以使用命令拉取
+		$ flutter packages get
+	
+	使用：
+		在需要的地方 import 引入后参考范例使用组件
+	
+	
+	
+	
+
+	
+	
