@@ -1,0 +1,16 @@
+flutter 网络请求 以及 JSON 字符串和 Map 类型转换
+
+	需要引入库，处理 Json字符串和 Map 类型转换
+	import 'dart:convert';
+	
+	网络请求 可以使用 http 插件库
+	pubspec.yaml ==> dependencies:
+						http: ^0.12.0+4
+	
+	
+	
+	
+	
+
+	
+	
