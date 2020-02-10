@@ -1,6 +1,10 @@
 flutter 弹出窗 AlertDialog showToast SimpleDialog showModalBottomSheet 
 	以及自定义弹出窗组件
 	
+	toast 使用插件库
+	pubspec.yaml ==> dependencies:
+						fluttertoast: ^3.1.3
+	
 	
 	
 	
