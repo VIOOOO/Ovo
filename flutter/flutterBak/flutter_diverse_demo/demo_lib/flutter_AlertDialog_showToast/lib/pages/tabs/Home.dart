@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/MyDialog.dart';
 
 // 首页
 class HomePage extends StatefulWidget {
@@ -16,12 +17,26 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           RaisedButton(
-            child: Text('跳转到 弹出框演示页'),
+            child: Text('Dialog 弹出框演示页'),
             onPressed: () {
               Navigator.pushNamed(context, '/dialog');
             },
           ),
-          
+          SizedBox(height: 20),
+          RaisedButton(
+            child: Text('显示自定义 Dialog'),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return Mydialog(
+                    title: '标题',
+                    content: '文本',
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );
