@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 // 轮播插件
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 //import 'package:transparent_image/transparent_image.dart';
 //	图片缓存插件
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_trip/dao/home_dao.dart';
+import 'package:flutter_trip/model/home_model.dart';
 
 // 顶部appBar 在页面滚动最大值后完全显示
 const APPBAR_SCROLL_OFFSET = 100;
@@ -28,6 +32,16 @@ class _HomePageState extends State<HomePage> {
 //		'a03.jpeg',
 //	];
   double appBarAlpha = 0;
+  // 接口数据
+  String resultString = "";
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  // 页面滚动距离计算
   _onScroll(offset) {
     double alpha = offset / APPBAR_SCROLL_OFFSET;
     if (alpha <= 0) {
@@ -38,7 +52,32 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       appBarAlpha = alpha;
     });
-    print(offset);
+    print(appBarAlpha);
+  }
+
+  loadData() async {
+    // HomeDao.fetch().then((result){
+    //   setState(() {
+    //     resultString = json.encode(result);
+    //   });
+    // }).catchError((e){
+    //   // 抛出异常处理
+    //   setState(() {
+    //     resultString = e.toString();
+    //   });
+    // });
+
+    // 另一种方法 使用异步
+    try {
+      HomeModel model = await HomeDao.fetch();
+      setState(() {
+        resultString = json.encode(model.config);
+      });
+    } catch (e) {
+      setState(() {
+        resultString = e.toString();
+      });
+    }
   }
 
   @override
@@ -101,7 +140,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Container(
                     height: 800,
-                    child: ListTile(title: Text('超长滚动列表')),
+                    child: ListTile(
+                      title: Text(resultString),
+                    ),
                   ),
                 ],
               )),
