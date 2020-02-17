@@ -33,7 +33,7 @@ class _TabsState extends State<Tabs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter 弹出窗'),
+        title: Text('Flutter http 网络请求'),
       ),
       // 根据 tab 页签改变切换页面
       body: this._pageList[this._currentIndex],
