@@ -1,0 +1,15 @@
+flutter Dio库实现网络请求 get post 
+	put delete 以及动态渲染数据
+	
+	
+	Flutter Dio 库
+		dio是一个强大的Dart Http请求库，支持Restful API、FormData、拦截器、请求取消、Cookie管理、
+		文件上传/下载、超时、自定义适配器等
+		
+	网络请求 可以使用 Dio 插件库
+	pubspec.yaml ==> dependencies:
+						dio: ^3.0.8
+	
+
+	
+	
