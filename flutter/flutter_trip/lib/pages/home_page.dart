@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                     // 顶部轮播
                     child: Swiper(
                       itemCount: _imageUrls.length,
-                      autoplay: true,
+                      // autoplay: true,
                       itemBuilder: (BuildContext context, int index) {
 //                  // 加载网络图片前 kTransparentImage 用这个透明图片代替 实现过渡
 //                  return FadeInImage.memoryNetwork(
