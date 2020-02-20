@@ -1,0 +1,13 @@
+flutter 视频播放
+	
+	官方提供的 video_player 库可以播放视频，但是有局限性，没法控制底部播放进度。所以本次主要使用第三方视频播放库
+	chewie ，看起来类似 HTML5 播放组件。chewie 相对 video_player 来说，有控制栏和全屏的功能。Chewie 使用 video_player 
+	引擎并将其包裹在友好的 Material 或 Cupertino UI 中！
+	所以 chewie 依赖于 video_player 两者都需要安装
+	
+		pubspec.yaml ==> dependencies:
+							  # flutter官方视频播放 
+							  video_player: 0.10.1+3
+							  # 第三方视频播放
+							  chewie: ^0.9.8+1
+	
