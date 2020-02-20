@@ -1,0 +1,18 @@
+Flutter Native WebView 组件 app 内打开浏览器加载远程页面
+	flutter_inappbrowser  app 内打开浏览器加载远程 web 页面渲染新闻详情数据
+	flutter_inappbrowser 已经被重命名为 flutter_inappwebview
+	
+	pubspec.yaml ==> dependencies:
+						flutter_inappwebview: ^2.1.0+1
+						
+	在使用新的插件时候发现有许多解决不了的bug 所以又使用旧版的插件，指定版本号
+	pubspec.yaml ==> dependencies:
+						flutter_inappbrowser: 1.2.1
+	
+	需要注意 ：
+		1、android 最小内版本号 minSdkVersion 要大于17
+		==> D:\Android\Project\flutter_app_test\android\app\build.gradle
+			==> minSdkVersion 17
+			
+		2、ios 内语言必须是 swift
+	
