@@ -1,0 +1,68 @@
+Flutter Native 拍照和上传 Device 中获取设备信息 Location 地理位置 
+
+一：获取设备信息
+	从 Flutter 应用程序中获取当前设备信息
+		pubspec.yaml ==> dependencies:
+							device_info: ^0.4.1+4
+
+二：地理位置				
+	地理定位 Flutter  提供的官方定位是国外位置 location，国内无法使用，
+	所以使用高德地图代替，
+		要使用高德地图定位,首先需要申请 Key:
+		1、申请成为开发者
+		
+		2、创建应用配置获取 Key （参考教程演示）
+			https://lbs.amap.com/api/android-sdk/guide/create-project/get-key
+			信息填写需要应用包名 packageName，应用包名所在位置：
+			==> D:\Android\Project\flutter_app_test\android\app\src\main\AndroidManifest.xml
+			==> <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.flutter_app_test">
+			应用包名字为：com.example.flutter_app_test
+			
+		3、申请到秘钥之后 安装依赖
+		pubspec.yaml ==> dependencies:
+							amap_location: ^0.2.0
+							
+		4、修改你的项目录 /app/build.gradle 在 android/defaultConfig 节点修改 
+			manifestPlaceholders, 新增高德地图 key 配置
+			
+			android {
+				.... 你的代码
+				defaultConfig {
+					.....
+					manifestPlaceholders = [
+						AMAP_KEY : "aa9f0cf8574400f2af0078392c556e25", // 高德地图 key
+					]
+				}
+				...你的代码
+				dependencies {
+					/// 注意这里需要在主项目增加一条依赖，否则可能发生编译不通过的
+					情况
+					implementation 'com.amap.api:location:latest.integration'
+					...你的代码
+				}
+				
+		5、android 6 以上需要获取定位权限，需要再加入插件文档内的代码，在注意点栏的代码
+
+三、拍照和上传
+flutter 调用原生硬件 Api 实现照相机拍照和相册选择以及拍照上传到服务器
+	
+	适用于iOS和Android的Flutter插件，用于从图像库中拾取图像，并使用相机拍摄新照片。
+	上传图片需要用到 dio 插件
+		pubspec.yaml ==> dependencies:
+							# 拍照图库选择
+							image_picker: ^0.6.3+3
+							# http 网络请求
+							dio: 2.1.7
+							
+	注意事项：
+	1、Dio官方在2019年9月18后更新了Dio3.x版本，Dio 3.x为了支持Flutter Web，进行较大重构，上传文件的方法和以前的2.x不一样。
+
+	2、当前案例中用的是2.x版本
+		当前案例需要在安装依赖的时候指定Dio的版本
+		dio: 2.1.7
+		注意指定版本的时候没有^     
+		如果是 dio: ^2.1.7表示安装最新版本的Dio库
+		如果是 dio: 2.1.7 表示安装2.1.7的版本Dio库
+
+	3、如果你想用最新的Dio 3.x版本实现上传图片， 参考【源码-flutter_app_拍照 上传Dio3.x版本】的代码。
+							
