@@ -1,0 +1,17 @@
+flutter 下拉刷新上拉加载分页以及内容详情
+	
+News 新闻页
+	下拉刷新使用自带 RefreshIndicator 组件的 onRefresh 事件方法 返回类型 Future<void>， 
+	也可以使用 flutter_easyrefresh 插件，但是目前有bug
+	
+	上拉加载分页可以用 listView 的 controller 绑定在外部定义的 ScrollController 属性监听滚动事件
+	
+页面详情
+	用 flutter_html 解析 html 成flutter 标签， 应对太复杂的页面结构 html 标签过多此方法并不好用，
+	只能调整统一的样式，不能自定义不同标签样式，可以使用 flutter WebView 组件 
+	flutter_inappbrowser 加载远程页面解析渲染
+		pubspec.yaml ==> dependencies:
+							flutter_html: ^0.11.1
+							
+	flutter_inappbrowser 已经被重命名为 flutter_inappwebview
+	
