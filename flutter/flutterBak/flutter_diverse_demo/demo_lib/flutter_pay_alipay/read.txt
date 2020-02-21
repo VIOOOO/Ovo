@@ -1,0 +1,46 @@
+Flutter Native 应用添加支付宝支付
+	
+一、支付宝支付之前的准备工作  创建应用 生成签名 提交审核
+
+	准备工作、接入支付宝：
+	
+	1.  必须注册企业支付宝账户，如果已有企业支付宝账户忽略此步骤
+	2.  百度搜索《支付宝开放平台》，或者点击下面链接进入支付宝开发接入页面：
+	https://open.alipay.com/developmentAccess/developmentAccess.htm
+	
+	根据文档操作，创建应用私钥公钥，对应生成支付宝公钥
+
+							
+							
+二、支付宝支付流程以及用 Flutter 在 Android Ios 实现支付
+
+		flutter支付宝插件
+		pubspec.yaml ==> dependencies:
+							# 支付宝支付
+							sy_flutter_alipay: ^0.2.1
+							
+	将支付信息传递后端，之后通过传递回来的签名订单，调用插件方法进行支付 SyFlutterAlipay.pay()
+	
+	服务端 PHP 配置要求：
+	1.要求5.5以上版本
+	2.需要开启openssl      extension=php_openssl.dll
+	3、如果支付成功没有异步通知请联系阿里人工客服
+	
+	
+	
+三、支付宝支付流程以及用 Flutter 在Android Ios 中实现支付宝支付
+	
+	在 ios 中库依赖和 android 一样
+
+
+
+
+
+
+
+
+
+
+
+
+	
