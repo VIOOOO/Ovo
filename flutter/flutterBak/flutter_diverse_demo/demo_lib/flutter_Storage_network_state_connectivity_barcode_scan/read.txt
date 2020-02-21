@@ -1,0 +1,72 @@
+Flutter Native Storage本地存储 检测网络变化 barcode_scan二维码扫码
+
+检测网络
+	使用 connectivity 库。该插件允许Flutter应用发现网络连接并进行相应配置。
+	它可以区分蜂窝连接和WiFi连接。该插件适用于iOS和Android。
+	
+		pubspec.yaml ==> dependencies:
+							connectivity: ^0.4.8
+							
+							
+Storage本地存储
+	需要用到 shared_preferences 库，包装NSUserDefaults（在iOS上）和SharedPreferences（在Android上），
+	为简单数据提供持久存储。数据异步保存到磁盘。这两个平台都不能保证在返回后将写操作持久化到磁盘，
+	并且该插件不得用于存储关键数据。
+	
+		pubspec.yaml ==> dependencies:
+							shared_preferences: ^0.5.6+1
+							
+							
+	方法
+		1 、设置值
+			SharedPreferences prefs = await SharedPreferences.getInstance();
+			prefs.setString(key, value);
+			prefs.setBool(key, value)
+			prefs.setDouble(key, value)
+			prefs.setInt(key, value)
+			prefs.setStringList(key, value)
+		
+		2 、 获取值
+			SharedPreferences prefs = await SharedPreferences.getInstance();
+			var data=prefs.getString("name");
+		
+		3 、 删除值
+			SharedPreferences prefs = await SharedPreferences.getInstance();
+			prefs.remove(key); //删除指定键
+			prefs.clear();//清空键值对
+			
+			
+二维码扫码 配置相对复杂 需要android studio 检查更新下载相关依赖包
+	需要用到 barcode_scan 库，用于扫描2D条码和QR码。
+	
+		pubspec.yaml ==> dependencies:
+							shared_preferences: ^0.5.6+1
+	
+	该插件需要配置，
+	android 将相机权限添加到您的AndroidManifest.xml，
+	<uses-permission android:name="android.permission.CAMERA" />
+	并编辑 build.gradle文件 详细说明查看插件库
+	
+	ios 说明添加到Info.plist等
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
