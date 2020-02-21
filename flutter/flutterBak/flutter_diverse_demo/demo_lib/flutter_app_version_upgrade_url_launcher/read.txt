@@ -1,0 +1,90 @@
+Flutter Native AppVersion检测应用升级安装 url_launcher模块打开外部浏览器 短信电话等应用
+
+	AppVersion检测应用版本号 服务器下载文件实现APP自动升级安装
+一、Android App  升级执行流程
+	1、获取本地版本号
+	2、请求服务器获取服务器版本号
+	3、本地版本和服务器版本不一致提示升级，弹窗提示用户是否更新
+	4、用户确定升级，调用文件传输方法下载 apk 文件
+	5、监听下载进度
+	6、下载完成打开 Apk 进行安装
+	
+	注意：在 Ios 中没法直接下载安装，如果版本不一致直接跳转到 Ios 应用对应的应用市场就可以了。
+
+		pubspec.yaml ==> dependencies:
+							# APP更新需要用到的库：
+							# 检测版本号
+							package_info: ^0.4.0+13
+							# 获取文件存储路径
+							path_provider: ^1.6.0
+							# flutter 文件下载
+							flutter_downloader: ^1.4.1
+							# 打开文件插件
+							open_file: ^3.0.1
+							
+							
+	Android 升级 app 涉及的 API 库
+	  插件名称 				描述 				插件地址
+	package_info 		检测版本号 			https://pub.dev/packages/package_info
+	path_provider 		获取文件存储路径 	https://pub.dev/packages/path_provider
+	flutter_downloader 	flutter_downloader 	https://pub.dev/packages/flutter_downloader
+	open_file 			打开文件插件 		https://pub.dev/packages/open_file
+	
+	
+二、配置 AndroidMenifest.xml  文件
+	
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+	
+三、配置版本号（不一定需要）：android:versionCode="3" android:versionName="2.0.1"
+	<manifest android:hardwareAccelerated="true" android:versionCode="1" android:versionName="0.0.1"
+		package="io.jdshop.demo" xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	在 vscode 内修改版本号：
+	pubspec.yaml ==>
+		version: 2.0.1+3
+		
+	对应配置表内的版本：version: 2.0.1+3 == versionCode="3" ， version: 2.0.1 == versionName="2.0.1"
+	在 android studio  可以直接在配置表内修改
+		
+	注意：每次升级前需要修改版本号，后正式打包
+	
+四、签名打包 正式打包
+	android studio 工具栏 build ==> Generate Signed Bundle/APK... ==> APK  ==> Next 
+		弹出框内填写 对应的 Key,若没有则需要注册申请一个
+		一直niex 到 Build Variants: 选择 release 完成
+		
+	完成密码填写后，打包项目就可以发到应用商店。
+	下一次升级，一样的步骤，build 后填写一样的密码，Key store path 的填入文件要与上一次一致，已经申请好的密码文件要保存好
+	
+	要点：
+		包名一致 <manifest package="com.example.flutter_app_test" ...>
+		版本号修改更高一级 <manifest android:versionCode="2" android:versionName="0.0.2" ...>
+		签名文件一致 Key store path
+		将打包好的应用发到服务器，用户下载更新会替换旧应用
+		
+
+ios 更新 打开外部浏览器，跳转到应用商店地址
+		
+	
+	
+
+	
+
+Flutter Native 调用 url_launcher 模块打开外部浏器 打开外部应用 拨打电话 发送短信
+	
+	例如Ios 更新需要打开外部浏览器跳转到商店
+	
+
+		pubspec.yaml ==> dependencies:
+							# 打开外部浏器 打开外部应用 拨打电话 发送短信
+							url_launcher: ^5.4.2
+							
+							
+							
+							
+							
+							
+	
