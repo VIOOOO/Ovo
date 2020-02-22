@@ -1,4 +1,4 @@
-flutter image 图片的引入使用方法
+Flutter 图片组件Image 、本地图片、远程图片、图片剪切
 
 	网络图片导入 Image.network(url)，以及圆形图片设置 main_image02.dart 案例
 	
@@ -9,7 +9,9 @@ flutter image 图片的引入使用方法
 			 flutter ==> assets ==> - images/xxx.jpeg  
 									- images/2.0x/xxx.jpeg  
 									- images/3.0x/xxx.jpeg 
-		4、本地图片圆角和网络图片一样							
+		4、本地图片圆角和网络图片一样	
+	
+	注：引入本地图片容易出现报错，可以重新启动项目
 		
 		
 
