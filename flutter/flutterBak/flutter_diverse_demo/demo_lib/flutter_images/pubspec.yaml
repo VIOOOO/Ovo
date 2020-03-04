@@ -42,11 +42,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+  # 本地图片 "assets"前面有空格，需要至少与“#”对齐，或者左边框对齐，不对齐容易报错
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
-    - images/a.jpeg
-    - images/2.0x/a.jpeg
-    - images/3.0x/a.jpeg
+  - images/a.jpeg
+  - images/2.0x/a.jpeg
+  - images/3.0x/a.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
