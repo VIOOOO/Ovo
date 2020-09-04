@@ -106,7 +106,7 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0",
     "cordova-plugin-whitelist": "1",
-    "cordova-plugin-inappbrowser": "^2.0.2",
+    "cordova-plugin-inappbrowser": "^4.0.0",
     "cordova-plugin-themeablebrowser": "^0.2.17",
     "cordova-plugin-code-push": "^1.11.7",
     "cordova-plugin-console": "^1.1.0",
