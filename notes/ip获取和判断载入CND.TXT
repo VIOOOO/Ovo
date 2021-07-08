@@ -1,0 +1,18 @@
+原文地址：https://juejin.cn/post/6844903984356917256
+
+ip获取和判断载入CND
+
+举例搜狐API
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>  
+<script type="text/javascript">  
+        document.write(returnCitySN["cip"]+','+returnCitySN["cname"])  // 110.87.118.246,福建省厦门市
+</script>
+
+typescript 写法：
+var script = document.createElement('script');
+script.onload = script[onreadystatechange] = () => {
+  if (!this[readyState] || this[readyState] === "loaded" || this[readyState] === "complete" ) {
+    script.onload = script[onreadystatechange] = null;
+  }
+};
+script.src= "http://pv.sohu.com/cityjson?ie=utf-8";
