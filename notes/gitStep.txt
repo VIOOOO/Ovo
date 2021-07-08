@@ -100,6 +100,9 @@ $ git reflog
 撤销修改
 
 
+$ git reset --soft HEAD^
+	// 执行完commit后，还没推送到远程仓库前，撤回commit 到add 状态
+
 $ git checkout -- file
 	// git checkout -- file 可以丢弃工作区的修改。$ git checkout -- readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销
 	// 还未提交到 暂存区
