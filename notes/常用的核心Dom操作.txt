@@ -1,0 +1,42 @@
+DOM分为三部分：
+(1)核心DOM：操作任意标签树
+(2)HTML DOM：操作HTML标签树
+(3)XML DOM：操作XML标签树
+
+常用的核心DOM操作
+(1)查找元素的方法
+	document.getElementById('p1')
+	document.getElementsByName('uname')
+	document.getElementsByTagName('div')
+	document.getElementsByClassName('btn')
+	document.querySelector('选择器')
+	document.querySelectorAll('选择器')
+	遍历DOM节点：
+	node.parentNode
+	parent.childNodes、parent.children
+	node.nextSibling、node.previousSibling
+(2)修改元素的属性
+	node.setAttribute('title','值')
+	node.getAttribute('title')
+(3)修改元素的内容
+	element.innerHTML
+	element.textContent/innerText
+(4)修改元素的样式
+	element.style.color = 'red';
+	element.className = 'btn btn-danger'
+(5)修改元素的值
+	inputElement.value
+(6)添加新元素
+	var newElement = document.createElement('div');
+	parent.appendChild(newElement)
+(7)删除已有元素
+	parent.removeChild(node)
+(8)替换旧元素
+	parent.replaceChild(oldChild, newChild)
+(9)元素克隆
+	element.cloneNode()
+
+总结：核心DOM操作的问题
+  · 方法名普遍比较长
+  · 操作比较僵硬
+  · 方法存在浏览器兼容性

@@ -1,0 +1,78 @@
+常用的 CSS集合
+
+鼠标样式
+//默认
+	cursor:default;
+
+//自适应浏览器默认
+	cursor:auto;
+
+//抓取
+	cursor:move;
+	
+//小手
+	cursor:pointer
+
+//IE显示手
+	cursor:hand；
+
+
+
+清除浮动影响
+.clear{
+	clear:both;
+	font-size:0px;
+	height:1px
+}
+
+clearBox:after {
+	content: '.';
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+
+
+
+
+
+CSS media 自适应
+
+@media screen and (min-width: 1199px) { //浏览器屏幕最小宽度760px以上
+
+}
+
+@media screen and (max-width: 760px ){ //浏览器屏幕最大宽度1199px下
+
+}
+
+@media screen and (min-width: 420px) and (max-width: 770px){ //浏览器屏幕宽度在420px和770px之间
+
+}
+
+
+CSS backgoround 背景复合属性顺序总结：
+background:bg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment initial|inherit;
+	bg-color ：颜色
+	bg-image ：图像索引地址
+	position/bg-size：图像位置/背景图片大小（二选一
+	bg-repeat ：背景图片是否重复平铺左到右上到下
+	（repeat 默认重复 / no-repeat 不重复 / repeat-x 只有水平位置会重复 / repeat-y 只有垂直位置会重复 / inherit 继承父元素
+	bg-origin ：	指定背景图像的定位区域
+		（background-origin: padding-box 	背景图像填充框的相对位置 | border-box 	背景图像边界框的相对位置 | content-box 背景图像的相对位置的内容框
+	bg-clip ：背景图片绘画区域
+	（background-clip: border-box 默认 背景绘制在边框方框内（剪切成边框方框） | padding-box 背景绘制在衬距方框内（剪切成衬距方框）| content-box 背景绘制在内容方框内（剪切成内容方框）
+	bg-attachment :背景图释放跟随移动
+		( scroll 跟随滚动/fixed 相对固定/local 随着内容滚动 / initial 默认值 / inherit 继承父元素
+	initial ：默认值
+	inherit ：继承父元素
+	
+	例子：
+	    background: #e6e6e6 url(./img/100.png) bottom center no-repeat;
+        background-size: contain; /*都需要位置和尺寸时候，其中一个另外写*/
+		
+		
+		
+	

@@ -1,0 +1,353 @@
+JSVUE常用方法集合：
+
+
+ // 查询某元素，在数组内的名称
+	queryName(item, arrName) { 
+	  let that = this
+	  let arrs = that[arrName];
+	  let refine = "";
+
+	  if (item === "") {
+		return
+	  }
+	  arrs.forEach(ele => {
+		if (ele.id === item) {
+		  refine = ele.name
+		}
+	  });
+	  return refine
+	},
+
+
+
+
+
+
+// 处理浏览器地址 URL 参数
+	function getQuery() {
+		const url = decodeURI(location.search); // 获取url中"?"符后的字串(包括问号)
+		let query = {};
+		if (url.indexOf("?") != -1) {
+			const str = url.substr(1);
+			const pairs = str.split("&");
+			for(let i = 0; i < pairs.length; i ++) {
+				 const pair = pairs[i].split("=");
+				query[pair[0]] = pair[1];
+			}
+		}
+		return query ;  // 返回对象
+	}
+
+	function getQueryVariable(name) {
+		const url = decodeURI(location.search); // 获取url中"?"符后的字串(包括问号)
+		let query = {};
+		if (url.indexOf("?") != -1) {
+			const str = url.substr(1);
+			const pairs = str.split("&");
+			for(let i = 0; i < pairs.length; i ++) {
+				 const pair = pairs[i].split("=");
+				 if(pair[0] === name) return  pair[1]; // 返回 参数值
+			}
+		}
+	   return(false);
+	}
+
+
+
+// clipboard 拷贝功能
+
+<div class="copySpot">拷贝内容123</div>
+
+<script src=https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js></script>
+function copyBoard(data) {
+    // 指定声明带有class的按钮 动态添加拷贝内容，需要点击触发
+    var clipboard = new ClipboardJS(".copySpot", {
+        text: function () {
+            return JSON.stringify(data);
+        }
+    })
+    clipboard.on('success', function (e) {
+        // console.log('success');
+        // console.log(e.text);
+        e.clearSelection();
+    })
+    clipboard.on('error', function (e) {
+        console.log('error');
+        // console.log(e);
+    })
+}
+
+
+
+
+// 日期处理 年月日 星期等
+	export function parseTime(time, cFormat) {
+	  if (arguments.length === 0) {
+		return null
+	  }
+	  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
+	  let date
+	  if (typeof time === 'object') {
+		date = time
+	  } else {
+		if (('' + time).length === 10) time = parseInt(time) * 1000
+		date = new Date(time)
+	  }
+	  const formatObj = {
+		y: date.getFullYear(),
+		m: date.getMonth() + 1,
+		d: date.getDate(),
+		h: date.getHours(),
+		i: date.getMinutes(),
+		s: date.getSeconds(),
+		a: date.getDay()
+	  }
+	  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+		let value = formatObj[key]
+		// Note: getDay() returns 0 on Sunday
+		if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
+		if (result.length > 0 && value < 10) {
+		  value = '0' + value
+		}
+		return value || 0
+	  })
+	  return time_str
+	}
+
+	export function formatTime(time, option) {
+	  time = +time * 1000
+	  const d = new Date(time)
+	  const now = Date.now()
+
+	  const diff = (now - d) / 1000
+
+	  if (diff < 30) {
+		return '刚刚'
+	  } else if (diff < 3600) {
+		// less 1 hour
+		return Math.ceil(diff / 60) + '分钟前'
+	  } else if (diff < 3600 * 24) {
+		return Math.ceil(diff / 3600) + '小时前'
+	  } else if (diff < 3600 * 24 * 2) {
+		return '1天前'
+	  }
+	  if (option) {
+		return parseTime(time, option)
+	  } else {
+		return (
+		  d.getMonth() +
+		  1 +
+		  '月' +
+		  d.getDate() +
+		  '日' +
+		  d.getHours() +
+		  '时' +
+		  d.getMinutes() +
+		  '分'
+		)
+	  }
+	}
+
+
+
+
+
+// JS 获取客户端IP
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>  
+	<script type="text/javascript">  
+			document.write(returnCitySN["cip"]+','+returnCitySN["cname"])  // 110.87.118.246,福建省厦门市
+	</script>
+
+	var script = document.createElement('script');
+	script.onload = script[onreadystatechange] = () => {
+	  if (!this[readyState] || this[readyState] === "loaded" || this[readyState] === "complete" ) {
+		script.onload = script[onreadystatechange] = null;
+	  }
+	};
+	script.src= "http://pv.sohu.com/cityjson?ie=utf-8";
+
+
+
+
+// 获取 客户端 IP 和城市
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>
+   // 存入sessionStorage
+    sessionStorage.setItem('ip',returnCitySN.cip)
+    sessionStorage.setItem('area',returnCitySN.cname)
+       console.log(returnCitySN);
+        document.write(returnCitySN.cip);//ip
+        document.write(returnCitySN.cid);
+        document.write(returnCitySN.cname);//地区
+
+    </script>
+
+
+
+
+
+// 获取客户端信息 手机型号 系统等等
+
+function getId() {
+  const ua = navigator.userAgent;
+  const tmp = ua.split(' ');
+  let result = ${tmp[2]}${tmp[3]}${tmp[4]}${tmp[5]}${tmp[6]};
+  return result;
+}
+
+    var device_type = navigator.userAgent; //获取userAgent信息
+    console.log(device_type); 
+    var md = new MobileDetect(device_type); //初始化mobile-detect
+    var os = md.os(); //获取系统
+    var mob = md.mobile()
+    var phone = md.phone() 
+    var version = md.version()
+    var tablet= md.tablet()
+    // alert(os+'---'+mob+'~~~'+phone+'||'+tablet+'----'+version)
+    // alert(md.is('phone')) //返回布尔
+    // alert(md.is('tablet'))
+    alert(md.is('HTC'))//是不是HTC的牌子
+    alert(md.mobile('tablet')) //返回品牌
+    alert(md.mobile('phone'))
+    var model = "";
+    if (os == "iOS") { //ios系统的处理
+        os = +md.version("iPhone");
+        console.log(os)
+        model = md.mobile();
+    } else if (os == "AndroidOS") { //Android系统的处理
+        os = md.os() + md.version("Android");
+        var sss = device_type.split(";");
+        var i = sss.contains("Build/");
+        if (i > -1) {
+            debugger
+            model = sss[i].substring(0, sss[i].indexOf("Build/"));
+        }
+    }
+    //    alert(os + "---" + model);//打印系统版本和手机型号
+    //   document.write(model + '||' + os, '打印系统版本和手机型号')
+	
+	
+	
+	
+	
+	
+// 正则判断
+
+	export function isExternal(path) {
+	  return /^(https?:|mailto:|tel:)/.test(path)
+	}
+
+	export function checkNumber(value) { // 判断是否数字 非数字true
+
+	  if (typeof (value) == "string" && !value.replace(/ /g, '')) { // 判断值为空 false
+		return true;
+	  }
+	  else if (isNaN(parseFloat(value))) { // 若为非数字
+		return true;
+	  }
+	  else {
+		return false
+	  }
+	}
+
+	export function iMinY(i, y) { // 判断数字 i 小于 y
+
+	  if (checkNumber(i) || checkNumber(y)) { // 判断的值必须是数字
+		return false;
+	  }
+
+	  if (parseFloat(i) < parseFloat(y)) {
+		return true;
+	  } else {
+		return false;
+	  }
+
+	  function checkNumber(value) { // 判断是否数字 非数字true
+		if (typeof (value) == "string" && !value.replace(/ /g, '')) { // 判断值为空 false
+		  return true;
+		}
+		else if (isNaN(parseFloat(value))) { // 若为非数字
+		  return true;
+		}
+		else {
+		  return false
+		}
+	  }
+	}
+
+	export function iMinEqualY(i, y) { // 判断数字 i 小于等于 y
+
+	  if (checkNumber(i) || checkNumber(y)) { // 判断的值必须是数字
+		return false;
+	  }
+
+	  if (parseFloat(i) <= parseFloat(y)) {
+		return true;
+	  } else {
+		return false;
+	  }
+
+	  function checkNumber(value) { // 判断是否数字 非数字true
+		if (typeof (value) == "string" && !value.replace(/ /g, '')) { // 判断值为空 false
+		  return true;
+		}
+		else if (isNaN(parseFloat(value))) { // 若为非数字
+		  return true;
+		}
+		else {
+		  return false
+		}
+	  }
+	}
+
+	export function iMaxY(i, y) { // 判断数字 i 大于 y
+
+	  if (checkNumber(i) || checkNumber(y)) { // 判断的值必须是数字
+		return false;
+	  }
+
+	  if (parseFloat(i) > parseFloat(y)) {
+		return true;
+	  } else {
+		return false;
+	  }
+
+	  function checkNumber(value) { // 判断是否数字 非数字true
+		if (typeof (value) == "string" && !value.replace(/ /g, '')) { // 判断值为空 false
+		  return true;
+		}
+		else if (isNaN(parseFloat(value))) { // 若为非数字
+		  return true;
+		}
+		else {
+		  return false
+		}
+	  }
+	}
+
+	export function iMaxEqualY(i, y) { // 判断数字 i 大于等于 y
+
+	  if (checkNumber(i) || checkNumber(y)) { // 判断的值必须是数字
+		return false;
+	  }
+
+	  if (parseFloat(i) >= parseFloat(y)) {
+		return true;
+	  } else {
+		return false;
+	  }
+
+	  function checkNumber(value) { // 判断是否数字 非数字true
+		if (typeof (value) == "string" && !value.replace(/ /g, '')) { // 判断值为空 false
+		  return true;
+		}
+		else if (isNaN(parseFloat(value))) { // 若为非数字
+		  return true;
+		}
+		else {
+		  return false
+		}
+	  }
+	}
+	
+

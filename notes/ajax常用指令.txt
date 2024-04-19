@@ -1,0 +1,373 @@
+﻿mysql -uroot -p//后面没分号（;）
+SOURCE //引入文件
+SET NAMES UTF8;//转换避免乱码,sql文件直接写入
+1、创建库   CREATE DATABASE tes001 CHARSET=utf8;  
+    进入所创建的库  USE tes001;
+    查询库  SHOW DATABASES;
+    删除数据库 DROP DATABASE IF EXISTS tes001;
+2、创建表  CREATE TABLE t_dd(
+              nid     INT PRIMARY KEY AUTO_INCREMENT,//编号
+                      int primary key auto_increment
+              title   VARCHAR(20),//标题
+              content VARCHAR(500),//内容
+              count   BIGINT,//点击
+              pubtime DATETIME , //发表时间
+              uid     INT,  //发表人编号
+              uname   VARCHAR(20)//用户名称 NOT NULL DEFAULT '',//这列字符串不能为空
+              upwd    VARCHAR(32),//用户密码
+              pic     VARCHAR(100),//图片
+              regTime //注册时间 DATETIME NOT NULL DEFAULT 0,//这列数值不能为空
+            );
+        注：在每个mysql列表后面添加属性：
+                NOT NULL DEFAULT '' 表示内容（字符串）不能为空。字符串列表
+                NOT NULL DEFAULT 0  表示这列数值不能为空。数值、日期列表
+            避免后面默认被填入null 不能计算
+
+    查询表所有表名  SHOW TABLES;
+    查询表结构  DESC t_dd;
+    查询表内数据  SELECT * FROM t_dd;
+      ex：若内容为$sql="SELECT uid,uname,pic,upwd,regTime FROM t_dd";则为多个指定内容；如果使用 * 会显示全部内容LES;
+    查询表内数据-指定2号发表人内容
+        SELECT * FROM t_dd
+        WHERE uid = 2;
+    追加表内一列
+        ALTER TABLE 表名 ADD 列名 列类型;
+        ex:ALTER TABLE t_dd ADD uid INT;
+    删除表内一列
+        ALTER TABLE 表名 DROP 列名;
+    添加表内的数据 
+        INSERT INTO t_dd VALUES(列表1,值,列表2,值...);
+        也可用直接在服务器上http://127.0.0.1/
+            后面跟上msg_add.php?content=hi&uname=tom
+                                参数名1=值$参数名2=值2
+    删除表
+        DROP TABLE 表名;
+    删除表内数据
+        DELETE FROM 表名 WHTRE 条件;
+        ex: DELETE FROM t_dd WHTRT id=5;
+    修改表内数据
+        UPDATE 表名 SET 列表名 = 所要修改的值
+	    WHERE 所在列表id = 值;
+        ex：将表t_dd 的第9个评论人 的评论时间改为 2012-12-12
+          UPDATE t_dd SET regTime = '2012-12-12' 
+	      WHERE nid = 9;
+    循环输出 foreach($arr as $k=>$v){
+			  echo($v);
+			 }
+
+
+3、php连接数据库操作语句 mysql
+  <?php
+    //0:获取表单中的参数 
+      @$t =$_REQUEST['nid'] or die('编号是必须的');
+    //1.链接数据
+     $conn = mysqli_connect('127.0.0.1','root','','jd001');
+                             服务器地址             库名
+    //设置编码 避免乱码问题
+     mysqli_query($conn,"SET NAMES UTF8");
+    //2、发送sql语句
+	   $sql="INSERT INTO t_dd VALUES(1,'标题内容','2012-07-12')";//添加内容
+      //或者可以写成  $sql = "INSERT INTO t_dd VALUES";			
+                      $sql .= "(1,'标题内容','2012-07-12')";
+      $sql  = "DELETE FROM t_dd WHERE nid = $t";//nid=5删除编号为5内容
+	$resul = mysqli_query($conn,$sql);
+	//读取返回结果判断
+	if($resul===true){
+		echo "执行成功";
+	}else{
+		echo "执行失败";	
+	}
+  ?>
+  注：1、可用单独制作php文件，只写入连接数据的两段代码，然后引用
+         $conn = mysqli_connect('127.0.0.1','root','','jd001');
+         mysqli_query($conn,"SET NAMES UTF8");
+         加载文件指令 require('init.php');
+      2、php内用js代码方式
+        <?php
+          echo '<script>';
+          echo 'js代码段';
+          echo '</script>';
+        ?>
+3、php操作
+  1.抓取 
+    一次抓取一行数据
+	    关联:$row = mysqli_fetch_assoc($result);
+	    索引:$row = mysqli_fetch_row($result);
+	一次抓取所有行数据
+		$rows = mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+4、php内操作 js代码例子
+<script>
+      //1:获取所有删除按钮
+	  //2:绑定点击事件
+    $("#tb1 .btn-delete").click(function(e){
+		//3:在事件内部
+		//4:阻止事件默认行为
+		//e 是事件对象，从参数获取 不能用this ,this是事件的元素
+		    e.preventDefault();
+		//5:获取留言编号 获取href的内容 刚刚好对应id序号
+			var dd=$(this).attr("href");
+		//6:创建确认框      confirm()
+			var rs=window.confirm("确认删除吗？");
+		//7:如果用户点击 是
+		//8:自动跳转php删除程序 'car_delete.php?id='+	
+			if(rs){
+				location.href= 'car_delete.php?id='+dd;
+			}
+	});
+</script>
+
+1:工作流程
+	创建对象   var xhr = new XMLHttpRequest()
+	绑定事件   xhr.onreadystatechange=function(){}
+ 	打开连接   xhr.open('GET',url文件路径,true);
+  	发送主体数据 xhr.send(null);
+
+ex:例子1
+<script>
+  //使用ajax-->程序改变 
+  //1:表单原有一个按钮  submit
+  //  submit ---> button
+  //2:action="#"  清空 内容提交给表头
+  //程序功能不变-->添加用户
+  //用户名和密码保存数据库
+  //功能没有任何变量-->流程变化
+  //提交操作交  ajax
+  //使用ajax完成添加用户
+    //1:获取按钮 btn
+     var btn = document.getElementById("btn");
+    //2绑定点击事件
+     btn.onclick=function(){
+        var m = email.value;
+        var p = upwd.value;
+      //2.2:创建ajax对象 XMLHttpRequest()
+        var xhr = new XMLHttpRequest();
+      //2.3:绑定事件     onreadystatechange
+        xhr.onreadystatechange = function(){
+       //2.3.1 接收返回数据 responseText
+     alert(xhr.responseText);
+        }
+       //2.4:打开连接  
+        xhr.open('GET','user_add.php?email='+m+'&upwd='+p,true);
+       //2.5:发送数据  send(null);
+        xhr.sent(null);
+     }
+ </script>
+
+ ex：例子2 纯文本数据格式
+<script>
+   //1:获取按钮
+   //2:绑定点击事件
+   btn.onclick = function(){
+     //2.1:获取所有参数
+     var n = bname.value;
+     var p = pic.value;
+     var d = price.value;
+     var r = pubtime.value;
+     //2.2:创建xhr对象
+     //2.3:绑定事件
+     var xhr = new XMLHttpRequest();
+     xhr.onreadystatechange = function(){
+        //2.3.1 接收返回数据 
+        //2.3.2 清空原有输入
+        if(xhr.readyState===4&&xhr.status===200){
+            var num = parseInt(xhr.responseText);
+            if(num>0){
+             alert('新记录添加成功编号:'+num);
+             bname.value = "";
+             pic.value = "";
+             price.value= "";
+             pubtime.value = "";
+            }else{
+             alert("新记录添加失败"+num);
+            }
+        }
+      }
+     //2.4:打开连接  POST
+       xhr.open('POST','book_add.php',true);
+     //2.5:设置请求头消息格式两个参数（"",""）
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+     //2.6:发送  参数
+        xhr.send(`bname=${n}&pic=${p}&price=${d}&pubtime=${r}`); 
+   }
+</script> 
+例子2的 php 纯文本使用文本与网页响应消息
+<?php
+  //0:修改响应头消息 text/html
+  header("Content-Type:text/html;charset=utf-8");
+  //1:获取用户输入参数???
+  @$kw = $_REQUEST['kw'] or die("搜索关键字是必须的");
+  //2:连接数据库 设置编码
+  require("init.php");
+  //3:创建sql    发送sql
+  $sql = "SELECT bname FROM dd_book";
+  $sql .= " WHERE bname LIKE  '%$kw%'";
+  //4:抓取多行记录
+  $result = mysqli_query($conn,$sql);
+  $rows = mysqli_fetch_all($result,MYSQLI_ASSOC);
+  //5:<li>...</li>
+  $html = "";
+  foreach($rows as $k=>$v){
+	  $bname = $v['bname'];
+	  $html .= "<li>$bname</li>";
+  }
+  echo $html;
+?>
+
+
+例子3 josn数据转换
+获取蛋糕列表 json数据类型
+php查询
+<?php
+	//0:修改响应头部数据格式
+ header("content-type:application/json;charset=utf-8");
+ //引入文件require("init.php");
+ //文件内容是 下面两行
+  $conn = mysqli_connect("127.0.0.1","root","","meiduowei");
+  mysqli_query($conn,"SET NAMES UTF8");
+
+ //查询语句
+ $sql = "SELECT * FROM t_cake";
+ $result = mysqli_query($conn,$sql);
+ $rows = mysqli_fetch_all($result,MYSQLI_ASSOC);
+ $json = json_encode($rows);
+ echo $json;
+?>
+
+html内
+<h1>获取蛋糕列表 json数据类型</h1>
+<table border="1" width="80%">
+    <thead>
+        <tr>
+            <td>名称</td>
+            <td>图片</td>
+            <td>价格</td>
+            <td>操作</td>
+        </tr>
+    </thead>
+    <tbody id="tb1">
+    </tbody>
+</table>
+
+<script>
+//发送ajax请求 返回数据拼接 tr td
+    window.onload= function(){
+        //创建xhr对象
+        var xhr= new XMLHttpRequest();
+        //绑定事件
+        xhr.onreadystatechange = function(){
+            //接收数据判断
+            if(xhr.readyState===4&&xhr.status===200){
+                //获取服务器返回json字符串
+                //转换js对象
+                //循环获取对象 拼接字符串
+                var list=JSON.parse(xhr.responseText);
+                var html = "";
+                for(var i=0;i<list.length;i++){
+                    //获取内容
+                    var obj= list[i]
+                    html+=`
+                        <tr>
+                            <td>${obj.name}</td>
+                            <td><img src="img/${obj.pic}" width="50"/></td>
+                            <td>${obj.price}</td>
+                            <td>
+                                <a href="${obj.id}" clas="btn-delete">删除</a>
+                            </td>
+                        </tr>
+                    `;
+                }
+                //循环外做赋值
+                tb1.innerHTML=html;
+            }
+        }
+        //打开连接
+        xhr.open("GET","cakelist_01.php",true);
+        //发送请求数据 GET请求直接写null
+        xhr.send(null);
+    }
+</script>
+
+
+例子4 惠买车day09 按条件查询数据库内容 json数据转换
+4php  
+<?php
+ //功能:获取用户提交汽车类别 lt8 lt15
+ //查询对应汽车列表，返回json
+ //1:修改响应头信息json
+    header("content-type:application/json;charest=utf-8");
+ //2:获取参数 type
+	@$ty = $_REQUEST["type"]or die('{"code":-2,"msg":"类别名是必须的"}');
+ //3:连接数据 设置编码
+	require("init.php");
+	//4:创建sql  发送sql
+	$sql = "SELECT * FROM t_car WHERE type='$type'";
+ //5:抓取全部记录
+	$result = mysqli_query($conn,$sql);
+	$rows = mysqli_fetch_all($result,MYSQLI_ASSOC);
+ //6:转换json字符串
+	$str = json_encode($rows)
+		 //7:发送
+		echo $str;
+?>
+
+4html
+<body>
+   <h1>惠买车</h1>
+   <ul class="nav">
+     <li class="active"><a href="lt8">8万以下</a></li>
+     <li><a href="lt15">15万以下</a></li>
+     <li><a href="lt30">30万以下</a></li>
+     <li><a href="suv">suv</a></li>
+   </ul>
+   <div class="container">
+     --汽车列表内容动态生成位置--
+   </div>
+   <script src="jquery-1.11.3.js"></script>
+   <script>
+      //1:鼠标移入指定类别 15万 14:30--14:45
+      //  1.1:获取汽车类别列表 a 绑定
+      //  1.2:鼠标移入 mouseenter
+      //  1.3:阻止事件默认行为
+      //  1.4:当前元素父元素添加active
+      //      兄弟清除 class
+			 //.removeClass("active");
+	 $(".nav a").mouseenter(function(e){
+			e.preventDefault();
+			$(this).parent().addClass("active").siblings().removeClass("active");
+			
+        //2:发送ajax请求->car_list.php
+        //2.1:$.ajax(); type
+        //3:获取该类别下所有汽车信息
+				//3.1:success
+			$.ajax({
+				url:"car_list.php",
+				data:{type:$(this).attr("href")},
+				success:function(data){
+					//console.log(data); js obj  3个元素	
+					var html="";
+					//拼接字符串 模板字符串拼接
+					//     数组         下标 当前对象
+					$.each(data,function(i,obj){
+					//名称 图片 价格
+					//<div class="item">
+          //<h4>汽车名称</h4>
+          //<p>汽车价格</p>
+          //<img src="图片"/>
+					//</div>
+						html += `
+							<div class="item">
+								<h4>${obj.cname}</h4>
+								<p>${obj.price}</p>
+								<img src="img/${obj.pic}">
+							</div>
+						`;
+					})
+					$(".container").html(html);
+				}
+			})
+		})
+
+   </script>
+ </body>
+

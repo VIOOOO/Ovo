@@ -1,0 +1,744 @@
+1、初始化基本配置 ES6
+
+
+创建文件wbk01夹 ，进入安装生成package.json文件
+$ npm init -y
+
+在wbk01目录下安装webpack 
+$ npm install webpack --save-dev
+安装成功后会多出node_modules文件 以及内部文件
+
+在安装目录wbk01下创建文件夹app/index.js
+js文件内容：
+console.log("hello");
+
+生成打包输出文件在build文件内（测试webpack是否安装成功）
+$ node_modules/.bin/webpack app/index.js build/index.js
+//生成的build/index.js JS文件可以删除
+
+打包成功后，在app目录内创建文件component.js
+写入一些内容：
+export default (text="hello world!!!!!!") => {
+  const element = document.createElement("div");
+  element.innerHTML = text;
+  return element;
+}
+
+修改app/index.js内容 
+import component from './component';
+document.body.appendChild(component());
+// 上述两个文件代码效果：引入html文件后，会在html文件内生成一个div，并且把div的值修改为text的内容。
+
+安装快速生成测试框架
+$ npm install html-webpack-plugin --save-dev
+
+安装结束后，在wbk01文件下创建webpack.config.js
+内容：
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const PATHS = {
+  app:path.join(__dirname,'app'),
+  build:path.join(__dirname,'build')
+};
+
+module.exports = {
+  entry: {
+    app:PATHS.app
+  },
+  output:{
+    path:PATHS.build,
+    filename:'[name].js'
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'webpack demo'
+    })
+  ]
+};
+
+测试打包代码
+$ node_modules/.bin/webpack
+// 打包成功后会生成一个html文件，在尾部自动引入app.js文件
+
+指令编译输出日志分析：
+C:\xampp\htdocs\webpacktest>webpack
+Hash: dcf84d9fd3ffa461be0b // 唯一的Hash值
+Version: webpack 3.5.5 //当前版本
+Time: 1179ms //耗时过程
+     Asset       Size  Chunks             Chunk Names
+// 输出文件             块号
+    app.js    3.08 kB       0  [emitted]  app
+index.html  180 bytes          [emitted]
+   [0] ./app/index.js 79 bytes {0} [built] //引用文件有两个
+   [1] ./app/component.js 147 bytes {0} [built]
+Child html-webpack-plugin for "index.html":  //引用的插件引起编译过程
+     1 asset
+       [2] (webpack)/buildin/global.js 509 bytes {0} [built]
+       [3] (webpack)/buildin/module.js 517 bytes {0} [built]
+        + 2 hidden modules
+
+在项目跟进中一般推荐使用本地安装的方式，避免冲突不兼容。
+但是每次打包代码没必要总是输入较长的打包代码命令，所以在文件配置修改更简便的方式。
+在文件package.json 进行配置 
+配置添加内容：
+"build":"webpack"
+完整代码段落：
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"webpack"
+  },
+
+配置后，代码打包命令
+$ npm run build
+
+
+
+
+2、代码自动打包刷新（整个页面刷新）
+
+
+需要先安装开发组建用于刷新
+$ npm install webpack-dev-server --save-dev
+安装成功可以检查package.json文件有
+“webpack-dev-server”："版本号"
+
+再添加脚本"start"调用webpack-dev-server，再设置一个环境变量，--env development 表示在nodejs当前环境是开发的环境变量
+注：webpack-dev-server编译后js会保存在内存中，输出需要“build”脚本打包输出
+在"scripts"{....}内配置
+"start":"webpack-dev-server --env development",
+
+再修改打包脚本"build": "webpack" 设置环境变量为发布产品形式压缩打包 --env production
+
+执行"start"
+$ npm run start
+
+执行成功后可以，修改app/component.js的输出内容text部分，保存后，查看输出端口页面，是否修改成功
+
+
+
+
+3、WDS端口号等配置
+
+
+编译前启动"start":"webpack-dev-server --env development"
+$ npm run start
+
+需要用到 devServer 进行部署（开发环境下），生产环境就需要更换其他进行部署 
+在webpack.config.js文件 module.exports ={....}内部署
+部署节点内容：
+devServer:{
+    host:process.env.HOST,
+    port:8082
+  },
+
+内容解析：
+    host:process.env.HOST, //IP地址配置，全局变量（默认）process.env.HOST
+
+    prot:80  //端口号 默认nodejs 8080端口，全局变量（默认）
+
+//在webpack.config.js文件内注释部分需要去掉
+
+配置好后取消"start"，再启动
+
+
+
+
+
+4、配置 ESLint 实现代码规范自动测试
+
+（1）手动检测
+
+安装ESLint 
+$ npm install eslint --save-dev
+
+安装成功后在package.json文件"scripts": {....}  配置
+配置内容
+ "lintjs":"eslint app/ webpack.*.js --cache"
+
+//lintjs调用eslint参数  在app目录做编译，webpack.*.js 正则的形式（.*.）， cache开启
+
+在wbk01目录下创建文件 .eslintrc.js
+文件内容：
+module.exports = {
+  env:{
+    browser: true,
+    commonjs: true,
+    es6: true,
+    node: true
+  },
+  extends: 'eslint:recommended',
+  parserOptions:{
+    sourceType:'module'
+  },
+  rules:{
+    'comma-dangle': ['error','always-multiline'],
+    indent: ['error',2],
+    'linebreak-style': ['error','unix'],
+    quotes: ['error','single'],
+    semi: ['error','always'],
+    'no-unused-vars': ['warn'],
+    'no-console':0
+  }
+};
+
+
+配置结束后再进行文件调用
+$ npm run lintjs -- --fix
+
+// fix可以自动修正错误代码参数，提示代码可能需要修改部分,若只输入$ npm run lintjs 可以查看错误地方和内容
+
+可以在文件component.js 内声明a=1 let a = 1;  但是后面并没有使用a的代码 测试esLint 的代码自动修正，和提示是否需要修改的内容
+
+
+
+（2）配置 ESLint 实现代码规范自动测试，在webpack 中集成 ，打包代码同时检测代码规范化，发现错误时候手动调用enlint修改代码
+
+需要安装eslint -loader
+$ npm install eslint-loader --save-dev
+
+安装后需要在 webpack.config.js 文件内的 module.exports ={....}内配置
+配置内容：
+module:{
+    rules:[
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+          emitwarning:true,
+        },
+      },
+    ],
+  },
+
+启动start
+$ npm run start
+// 若编译没有问题 可以进行开发工作，若出现错误可以手动调用 lintjs 修正代码 再启动start
+
+
+在开发中，若发现错误时候提示在cmd命令窗口内，但是在持续刷新下不方便查看错误地方，可以在配置中修改，将错误内容显示在页面中
+
+
+配置在浏览器显示错误，警告
+
+在文件webpack.config.js 的module.exports = {...}
+脚本devServer:{...} 内配置节点
+配置内容：
+overlay: {
+      errors: true,
+      warnings: true,
+    },
+
+完整配置为
+module.exports = {
+devServer:{
+    host:process.env.HOST,
+    port:8082,
+    overlay: {
+      errors: true,
+      warnings: true,
+    },
+  },
+..........
+｝
+
+再启动start
+$ npm run start 
+//若有错误可以在浏览器内看见错误内容
+
+
+
+
+5、webpack 加载 CSS的相关配置
+
+安装 css-loader style-loader
+$ npm install css-loader style-loader --save-dev
+
+安装成功后启动start
+$ npm run start
+
+loader 安装后需要配置相应的节点，添加正则
+在文件webpack.config.js 的module.exports = {...}内module >> rules配置节点
+module.exports = {
+    module: {
+        rules:[...]
+    ...}
+...}
+
+添加配置节点内容
+{
+   test: /\.css$/,
+   use: ['style-loader','css-loader'],
+},
+
+完整代码段：
+module:{
+    rules:[
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true,
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader','css-loader'],
+      },
+    ],
+  },
+
+//在loader定义 从右到左的规则,先处理css 再到style，loader: ['css-loader','style-loader'] >> styleLoader(cssLoader(input))
+
+配置完成后 测试
+在app/目录下建共用css文件  common.css
+再css文件内添加一些样式
+例如：
+body{
+	background-color:red;
+}
+
+进入app/index.js引入css文件
+引入代码：
+import '../app/common.css';
+或者是
+import './common.css';
+
+更新页面查看效果
+
+
+
+
+
+CSS作用域和CSS Modules理解
+当有不同的css文件设置相同名字class，样式优先覆盖
+准备两个css文件 style1 和style2 并对相同class 设置不同样式
+
+进入app/index.js 
+添加引用
+import style1 from './style1.css';
+import style2 from'./style2.css';
+
+再进入文件webpack.config.js 的module.exports = {...}内module >> rules配置节点
+module.exports = {
+    module: {
+        rules:[...]
+    //...,}
+//...,}
+
+修改对应节点css节点
+完整代码段
+module:{
+    rules:[
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true,
+        },
+      },
+      {
+        test: /\.css$/,
+        exclude:/node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            }
+          }
+        ],
+      },
+    ],
+  },
+
+再进入app/index.js
+进行传参 传入component
+传参代码：
+document.body.appendChild(component('123456',style1.class1,style2.class1));
+
+//传递了一个字符串123456 和两个class1
+
+进入component.js文件
+修改传入参数处理
+完整代码段：
+export default (text='hello world  777',class1,class2) => {
+  const element = document.createElement('div');
+  element.innerHTML = text;
+  element.className = class1;
+
+  const p = document.createElement('p');
+  p.innerText = 'p line';
+  p.className = class2;
+  element.appendChild(p);
+
+  return element;
+};
+
+//将第一个class class1给div标签  第二个class class2给p标签  
+
+
+代码打包CSS文件自动分离到独立文件
+在前端代码优化中，CSS样式应该是在js之前加载的，但是代码打包css 是融合在js内部，所以需要css独立文件
+
+安装插件extract-text-webpack-plugin
+$ npm install extract-text-webpack-plugin --save-dev
+
+安装结束后查看package.json是否安装成功
+在"devDependencies": {...} 是否有extract-text-webpack-plugin 以及版本号
+
+进入webpack.config.js 进行文件配置，需要修改css节点:
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const plugin111 = new ExtractTextPlugin({
+  filename: '[name].css',
+  ignoreOrder: true,
+});
+
+module.exports = {
+  devServer: //...,
+  entry: //...,
+  output: //...,
+  module: {
+    rules:[
+      //...
+      //css节点修改
+{
+    test: /\.css$/,
+    exclude:/node_modules/,
+    use: plugin111.extract({
+        use:{
+            loader: 'css-loader',
+            options: {
+                modules: true,
+            }
+        },
+        fallback: 'style-loader',
+    })
+},
+    ],
+  },
+plugins: [
+    new HtmlWebpackPlugin({
+      title: 'webpack demo',
+    }),
+    plugin111,
+  ],
+}
+
+完整代码为：
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const PATHS = {
+  app:path.join(__dirname,'app'),
+  build:path.join(__dirname,'build'),
+};
+const plugin111 = new ExtractTextPlugin({
+  filename: '[name].css',
+  ignoreOrder: true,
+});
+
+module.exports = {
+  devServer:{
+    host:process.env.HOST,
+    port:8082,
+    overlay: {
+      errors: true,
+      warnings: true,
+    },
+  },
+  entry: {
+    app:PATHS.app,
+  },
+  output:{
+    path:PATHS.build,
+    filename:'[name].js',
+  },
+  module:{
+    rules:[
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+
+        options: {
+          emitWarning: true,
+        },
+      },
+      {
+        test: /\.css$/,
+        exclude:/node_modules/,
+        use: plugin111.extract({
+          use:{
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            }
+          },
+          fallback: 'style-loader',
+        })
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'webpack demo',
+    }),
+    plugin111,
+  ],
+};
+
+注：
+use: 指需要什么样的loader去编译文件,这里由于源文件是.css所以选择css-loader
+fallback: 编译后用什么loader来提取css文件
+publicfile:用来覆盖项目路径,生成该css文件的文件路径
+
+
+
+
+6、文件压缩 自动检测文件大小进行优化
+
+进入文件webpack.config.js 的module.exports = {...}内配置节点
+
+节点内容：
+performance:{
+    hints: 'warning',  
+//performance警告可以变成'warning'的形式或者'error'形式
+
+    maxEntrypointSize:100000, 
+// 编译生成app大小限制 例如10000 > 100k ,一般用500K
+
+    maxAssetSize:450000,  
+//css 压缩限制450k
+  },
+
+配置完成后运行编译 
+$ npm run build
+
+编译介绍会生成一个打包文件，若原文件过小不会生成打包文件,
+因为原文件已经超过100k ,如果此时直接跳过编译打包，直接运行‘start’就会看见限制文件大小的提示。
+这个方法可以用于检测文件全局大小。
+在开发生产中，也可以直接调用命令 $ webpack -p 进行压缩打包。为了方便开发生产，进一步压缩，还是推荐调用自身的插件包babili-webpack-plugin，进行压缩打包。
+
+插件安装 babili-webpack-plugin
+$ npm install babili-webpack-plugin --save-dev
+
+进入文件webpack.config.js 配置 (引入文件"babili-webpack-plugin"，plugins添加)
+const BabiliPlugin = require("babili-webpack-plugin");
+module.exports = {
+  devServer: //...,
+  performance: //...,
+  entry: //...,
+  output: //...,
+  module: //...,
+  plugins: [
+    //...
+    new BabiliPlugin(),
+  ]
+}
+
+
+
+
+
+
+7、生成SourceMaps ——播单
+
+SourceMaps 用于找到源码位置,调试时候用 只需要配置devtool 就可以打开
+ 每一种devtool都有不同对应使用情况，查看手册使用。
+例如配置devtool使用原始类型
+节点内容为：
+devtool:'source-map',
+
+配置成功后重新启动‘start’
+编译成功后查看网页输出Sources 文件加载目录多了webpackwen文件，里面包含了原文件的代码内容，方便查看调试
+
+
+
+
+8、分离打包项目代码和组件代码
+
+
+当我们引入第三方软件包时候如何分离打包代码 例如react
+
+先安装react
+$ npm install react --save
+
+安装成功后 进入package.json 查看是否安装有 react
+再进入index.js 引入react
+引入代码：
+import: 'react';
+
+再进入 webpack.config.js 的module.exports = {...} 配置
+entry: {
+    //...,
+    vendor: ['react'],
+  },
+
+配置完成后进行代码打包
+$ npm run build
+
+查看输出原来的第三方组件已经有引入 打包优化，但是没有合并共有部分，所以还需要在文件webpack.config.js配置，将共同拥有的内容进行合并压缩
+配置内容：
+const webpack = require('webpack');
+
+plugins: [
+    //...,
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
+
+  ],
+
+打包后启动，可以在网页查看js 引入是先引入组件vendor.js,再引入app.js引入
+
+
+
+
+9、使用可视化图标进行打包分析
+
+
+先在package.json文件内的 "scripts":{....}内配置
+"stats": "webpack --env production --profile --json > stats.json"
+
+//代码意思
+--profile    监控编译过程占用时间问题 用于行内行内优化
+--json       将状态信息，统计信息 放入stats.json
+整句代码意思是： 将webpack编译过程以及包的依赖，生成统计信息的文本，然后把文本传到可视化的一些站点，可以看见非常完整的项目依赖关系和包引入的关系。
+
+配置完成后 执行"stats"
+$ npm run stats
+
+可以在项目根目录内看到有生成文件stats.json，将文件上传到站点可以查看到视图效果的依赖关系。
+
+
+
+
+10、webpack中配置多页面编译
+
+在之前配置中是没有index文件 都是通过new HtmlWebpackPlugin() 的方式生成，若需要原始html多页面的方式开发生产，就需要将new HtmlWebpackPlugin()这部分代码拿掉或者隐藏，
+需要隐藏的内容有：
+   //const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+和 plugins: [....]内的
+   //new HtmlWebpackPlugin({
+    //  title: 'webpack demo',
+    //}),
+
+
+之后在根目录wbk0下创建index.html文件
+再写入基本内容：
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./build/app.css">
+  <title>Title</title>
+</head>
+<body>
+  <p>this is index page</p>
+  <script src="./build/vendor.js"></script>
+  <script src="./build/app.js"></script>
+
+</body>
+</html>
+
+
+再编译项目
+$ webpack 
+//编译成功会生成build文件夹以及目录下相关文件
+
+用浏览器打开index.html 查看效果以及是否报错，若内容和之前无二则为成功修改
+
+
+
+多页面
+再创建about.html
+内容：
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./build/app.css">
+  <title>Title</title>
+</head>
+<body>
+  <p>this is index page</p>
+  <script src="./build/vendor.js"></script>
+  <script src="./build/about.js"></script>
+
+</body>
+</html>
+
+
+为了使文件规范化，html文件应该对应着的js 想通名字文件 所以修改index.html 引入的js文件，将app.js修改为 index.js
+再进入webpack.config.js 的 entry: {...}配置
+配置完整内容：
+entry: {
+    //app:PATHS.app,
+    index: './app/index.js',
+    about: './app/about.js',
+    vendor: ['react'],
+  },
+
+配置完成后编译内容
+$ webpack
+
+查看是否生成对应的 js文件，打开浏览器对应的页面查看内容
+
+
+10、HMR（Hot Module Replacement）热的模块替换，例如vue recat 会用到
+
+(没调试成功，console没打印内容 170903)
+
+整个页面有多个模块组成，可以替换其中一个模块，其他模块不变类似自动代码刷新，但不会是整个页面刷新
+
+进入package.json文件内的 "scripts":{....}内配置
+"hmr": "webpack-dev-server"
+
+进入文件webpack.config.js 的module.exports = {...}内 配置
+devServer:{
+    //...,
+    hotOnly: true, //HMR
+  },
+plugins: [
+    //...,
+    new webpack.HotModuleReplacementPlugin(), //HMR的配置 --hot
+  ],
+
+因为这些文件不是recat 和vue 内 所以在他提供的接口做一些实现
+进入component.js
+修改P的内容为：
+const p = document.createElement('input');
+  //p.innerText = 'p line';
+  p.type = 'checkbox';
+  p.className = class2;
+  element.appendChild(p);
+
+放入input  一个checkbox内 用于检测页面是否有刷新的状态
+
+进入index.js 
+添加内容：
+import Library from './library';
+//HMR interface 一个接口
+if(module.hot){
+  //若实现接口 是 hot 的状态将对内容模块进行，热加载的配置和更改，例如热加载library，就执行下面代码 
+  module.hot.accept('./library',() => {
+    console.log('Acception the update library module!');
+    Library.log();
+  })
+}
+
+
+启动“hmr”
+$ npm run hmr
+
+进入浏览器对应端口查看
+
