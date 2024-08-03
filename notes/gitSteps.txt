@@ -24,7 +24,8 @@ $ pwd
 	//pwd命令用于显示当前目录。
 	
 $ git init
-	// 创建一个版本库，一个空的文件夹 repository，再执行 $ git init 安装进来。多出个 隐藏的 .git 文件夹则表示成功，此文件夹不能修改
+	// 创建一个版本库。创建一个空的文件夹 repository，cd 进入文件夹内，再执行 $ git init 安装进来。多出个 隐藏的 .git 文件夹则表示成功，此文件夹不能修改
+	// git init 命令会让该文件夹，编程 Git 可以控制的版本库。
 	
 	// 为避免出现乱码，用 Notepad++代替系统自带记事本，Notepad++的默认编码设置为UTF-8 without BOM
 
@@ -148,13 +149,14 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 	// 在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件（id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人），如果已经有了，可直接跳到下一步。
 	// 你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。
 	
-	// 第2步：登陆GitHub，打开“Account settings”，“SSH Keys”页面：然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容
+	// 第2步：登陆GitHub，打开设置“Settings”，选择“SSH and GPG Keys”页面：然后，点“New SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容
 	验证是否成功
 
 	//$ ssh -T git@github.com
 	
 添加远程库步骤
 	// 在 gitHub 上创建远程仓库后，可以克隆本地仓库到远程仓库，根据提示运行下列命令
+	// 登录 Github 找到右上角 ”+“ 选择 “New repository” 创建远程仓库
 
 1、关联远程仓库和本地仓库
 $ git remote add origin git@github.com:VIO/Ovo.git
